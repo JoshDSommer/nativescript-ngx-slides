@@ -1,7 +1,7 @@
 # NativeScript NG2 Slides for iOS and Android -- ALPHA
 
 [![npm](https://img.shields.io/npm/v/nativescript-ng2-slides.svg)](https://www.npmjs.com/package/nativescript-ng2-slides)
-[![npm](https://img.shields.io/npm/dt/nativescript-ng2-slides.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-ng2-slidesnp)
+[![npm](https://img.shields.io/npm/dt/nativescript-ng2-slides.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-ng2-slides)
 
 
 ### Intro slides example:
@@ -15,7 +15,7 @@ _videos by [Brad Martin](https://github.com/bradmartin)_
 
 ## Example Usage:
 
-'''ts
+```ts
 import { SlidesModule } from 'nativescript-ng2-slides';
 
 import { AppComponent } from "./app.component";
@@ -28,7 +28,7 @@ import { AppComponent } from "./app.component";
 })
 export class AppModule { }
 
-'''
+```
 
 ### XML
 ```xml

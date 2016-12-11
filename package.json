@@ -1,6 +1,6 @@
 {
   "name": "nativescript-ng2-slides",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Angular Native(NativeScript + Angular 2) version of the slides",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "nativescript-slides"
+    "url": "https://github.com/TheOriginalJosh/nativescript-ng2-slides"
   },
   "author": "Josh Sommer <joshdsommer@gmail.com> (https://twitter.com/_JoshSommer)",
   "license": "MIT"
