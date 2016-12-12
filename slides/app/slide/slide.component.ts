@@ -5,7 +5,11 @@ import * as gestures from 'ui/gestures';
 
 @Component({
 	selector: 'slide',
-	templateUrl: './slide/slide.component.html',
+	template: `
+	<StackLayout #slideLayout [class]="cssClass">
+		<ng-content></ng-content>
+	</StackLayout>
+	`,
 })
 
 export class SlideComponent implements OnInit {

@@ -29,7 +29,11 @@ enum cancellationReason {
 
 @Component({
 	selector: 'slides',
-	templateUrl: './slides/slides.component.html',
+	template: `
+	<AbsoluteLayout>
+		<ng-content></ng-content>
+	</AbsoluteLayout>
+	`,
 })
 
 export class SlidesComponent implements OnInit {
