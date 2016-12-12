@@ -33,23 +33,23 @@ export class AppModule { }
 ### XML
 ```xml
 
-	<slides>
-		<slide class="slide-1">
-			<Label text="This is Panel 1"  />
-		</slide>
-		<slide class="slide-2">
-			<Label text="This is Panel 2"  />
-		</slide>
-		<slide class="slide-3">
-			<Label text="This is Panel 3"  />
-		</slide>
-		<slide class="slide-4">
-			<Label text="This is Panel 4"  />
-		</slide>
-		<slide class="slide-5">
-			<Label text="This is Panel 5"  />
-		</slide>
-	</slides>
+<slides>
+    <slide class="slide-1">
+        <Label text="This is Panel 1"></Label>
+    </slide>
+    <slide class="slide-2">
+        <Label text="This is Panel 2"></Label>
+    </slide>
+    <slide class="slide-3">
+        <Label text="This is Panel 3"></Label>
+    </slide>
+    <slide class="slide-4">
+        <Label text="This is Panel 4"></Label>
+    </slide>
+    <slide class="slide-5">
+        <Label text="This is Panel 5"></Label>
+    </slide>
+</slides>
 
 ```
 ### CSS
