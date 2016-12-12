@@ -3,10 +3,12 @@ import { NativeScriptModule } from "nativescript-angular/platform";
 
 import { AppComponent } from "./app.component";
 
+import { SlidesModule } from 'nativescript-ng2-slides';
+
 @NgModule({
     declarations: [AppComponent],
     bootstrap: [AppComponent],
-    imports: [NativeScriptModule],
+    imports: [NativeScriptModule, SlidesModule],
     schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

@@ -4,7 +4,10 @@
   "readme": "NativeScript Application",
   "repository": "<fill-your-repository-here>",
   "nativescript": {
-    "id": "org.nativescript.demo"
+    "id": "org.nativescript.demo",
+    "tns-ios": {
+      "version": "2.4.0"
+    }
   },
   "dependencies": {
     "@angular/common": "2.2.1",
@@ -16,6 +19,7 @@
     "@angular/platform-browser-dynamic": "2.2.1",
     "@angular/router": "3.2.1",
     "nativescript-angular": "1.2.0",
+    "nativescript-ng2-slides": "file:..",
     "nativescript-theme-core": "^0.2.1",
     "reflect-metadata": "~0.1.8",
     "rxjs": "5.0.0-beta.12",
