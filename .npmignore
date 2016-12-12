@@ -1,4 +1,9 @@
 demo/
-slides/
+slides/App_Resources
+slides/hooks
+slides/libs
+slides/node_modules
+slides/platforms
+
 *.png
 *.log
