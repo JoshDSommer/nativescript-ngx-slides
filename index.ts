@@ -1,3 +1,1 @@
-import { SlidesModule } from './slides/app/slides.module';
-
-export { SlidesModule };
+export { SlidesModule } from './slides/app/slides.module';
