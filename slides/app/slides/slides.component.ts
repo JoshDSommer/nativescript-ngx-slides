@@ -56,18 +56,18 @@ export class SlidesComponent implements OnInit {
 	}
 
 	constructor() {
+	}
+
+	ngOnInit() {
 		this.loop = this.loop ? this.loop : false;
 		this.pageWidth = this.pageWidth ? this.pageWidth : platform.screen.mainScreen.widthDIPs;
 		this.pageHeight = this.pageHeight ? this.pageHeight : platform.screen.mainScreen.heightDIPs;
 	}
 
-	ngOnInit() { }
-
 	ngAfterViewInit() {
 
 		// loop through slides and setup height and widith
 
-		console.log(this.slides);
 		this.slides.forEach((slide: SlideComponent) => {
 			AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
 			slide.slideWidth = this.pageWidth;
@@ -109,12 +109,10 @@ export class SlidesComponent implements OnInit {
 	private positionSlides(slide: ISlideMap) {
 		// sets up each slide so that they are positioned to transition either way.
 		if (slide.left != null && slide.left.slide != null) {
-			console.log('translate left')
 			slide.left.slide.layout.translateX = -this.pageWidth * 2;
 		}
 		slide.slide.layout.translateX = -this.pageWidth;
 		if (slide.right != null && slide.right.slide != null) {
-			console.log('translate right')
 			slide.right.slide.layout.translateX = 0;
 		}
 	}
