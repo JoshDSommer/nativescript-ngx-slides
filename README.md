@@ -81,7 +81,7 @@ Label{
 ```
 Great for Intros/Tutorials to Image Carousels.
 
-If the property `pageIndicators` is `true` you won't see the page indicators anymore as of 2.0.0 right away. there are two css classes exposed that you can setup however you like for active and inactive indicators. below is an example for semi translucent dots.
+This very much a work in progress. Please feel free to contribute.
 
 #### Plugin Development Work Flow:
 
@@ -92,8 +92,7 @@ If the property `pageIndicators` is `true` you won't see the page indicators any
 
 #### Known issues
 
-  * There appears to be a bug with the loop resulting in bad transitions going right to left.
-  * Currently in Android there is an known issue when a slide component inside of a scroll view.
+  * Probably lots...
 
 #### How To: Load slides dynamically
 You want to hook into the loaded event of the view and then create your view elements.
