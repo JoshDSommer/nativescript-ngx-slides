@@ -76,12 +76,19 @@ Label{
   width: 100%;
   font-size: 35;
   margin-top: 35;
+	color: #fff;
+
 }
 
 ```
 Great for Intros/Tutorials to Image Carousels.
 
 This very much a work in progress. Please feel free to contribute.
+
+### Attributes for SlideContainer
+
+-  **loop : boolean** - If true will cause the slide to be an endless loop. The suggested use case would be for a Image Carousel or something of that nature.
+
 
 #### Plugin Development Work Flow:
 
