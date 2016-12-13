@@ -101,9 +101,6 @@ This very much a work in progress. Please feel free to contribute.
 
   * Probably lots...
 
-#### How To: Load slides dynamically
-You want to hook into the loaded event of the view and then create your view elements.
-
 
 ## Contributing guidelines
 [Contributing guidelines](https://github.com/TheOriginalJosh/nativescript-swiss-army-knife/blob/master/CONTRIBUTING.md)
