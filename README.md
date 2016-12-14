@@ -9,6 +9,7 @@
 
 ### Image carousel example:
 [![Nativescript Slides. Click to Play](https://img.youtube.com/vi/RsEqGAKm62k/0.jpg)](https://www.youtube.com/embed/RsEqGAKm62k)
+
 _videos are from the NativeScript Slides plugin. all features may not be implemented yet._
 
 _videos by [Brad Martin](https://github.com/bradmartin)_
@@ -89,6 +90,35 @@ This very much a work in progress. Please feel free to contribute.
 
 -  **loop : boolean** - If true will cause the slide to be an endless loop. The suggested use case would be for a Image Carousel or something of that nature.
 
+- **pageIndicators : boolean** - If true adds indicator dots to the bottom of your slides.
+
+#### Indicators
+
+If the property `pageIndicators` is `true` you won't see the page indicators anymore as of 2.0.0 right away. there are two css classes exposed that you can setup however you like for active and inactive indicators. below is an example for semi translucent dots.
+
+```css
+.slide-indicator-inactive{
+    background-color: #fff;
+    opacity : 0.4;
+    width : 10;
+    height : 10;
+    margin-left : 2.5;
+    margin-right : 2.5;
+    margin-top : 0;
+    border-radius : 5;
+}
+
+.slide-indicator-active{
+    background-color: #fff;
+    opacity : 0.9;
+    width : 10;
+    height : 10;
+    margin-left : 2.5;
+    margin-right : 2.5;
+    margin-top : 0;
+    border-radius : 5;
+}
+```
 
 #### Plugin Development Work Flow:
 

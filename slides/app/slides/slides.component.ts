@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, forwardRef, ViewChildren, ContentChildren, ElementRef, QueryList, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, OnDestroy, forwardRef, ViewChild, ContentChildren, ElementRef, QueryList, Input } from '@angular/core';
 
 import { SlideComponent } from '../slide/slide.component';
 import * as gestures from 'ui/gestures';
@@ -7,6 +7,12 @@ import * as AnimationModule from 'ui/animation';
 import { AnimationCurve, Orientation } from 'ui/enums';
 import * as app from 'application';
 import { AbsoluteLayout } from 'ui/layouts/absolute-layout';
+import { StackLayout } from 'ui/layouts/stack-layout';
+import { Label } from 'ui/label';
+
+export interface IIndicators {
+	active: boolean;
+}
 
 export interface ISlideMap {
 	slide: SlideComponent;
@@ -32,19 +38,37 @@ enum cancellationReason {
 	template: `
 	<AbsoluteLayout>
 		<ng-content></ng-content>
+		<StackLayout *ngIf="pageIndicators" #footer orientation="horizontal" class="footer">
+			<Label *ngFor="let indicator of indicators"
+				[class.slide-indicator-active]="indicator.active == true"
+				[class.slide-indicator-inactive]="indicator.active == false	"
+			></Label>
+
+		</StackLayout>
 	</AbsoluteLayout>
 	`,
+	styles: [`
+		.footer{
+			width:100%;
+			height:20%
+			horizontal-align:center;
+		}
+	`],
+	encapsulation: ViewEncapsulation.None
 })
 
 export class SlidesComponent implements OnInit {
 	@ContentChildren(forwardRef(() => SlideComponent)) slides: QueryList<SlideComponent>;
+	@ViewChild('footer') footer: ElementRef;
 	@Input('pageWidth') pageWidth: number;
 	@Input('pageHeight') pageHeight: number;
 	@Input('loop') loop: boolean;
+	@Input('pageIndicators') pageIndicators: boolean;
 
 	private transitioning: boolean;
 	private direction: direction = direction.none;
 
+	indicators: IIndicators[];
 	currentSlide: ISlideMap;
 	_slideMap: ISlideMap[];
 
@@ -55,19 +79,19 @@ export class SlidesComponent implements OnInit {
 		return !!this.currentSlide && !!this.currentSlide.left;
 	}
 
-	constructor() {
+	constructor(private ref: ChangeDetectorRef) {
+		this.indicators = [];
 	}
 
 	ngOnInit() {
 		this.loop = this.loop ? this.loop : false;
+		this.pageIndicators = this.pageIndicators ? this.pageIndicators : false;
 		this.pageWidth = this.pageWidth ? this.pageWidth : platform.screen.mainScreen.widthDIPs;
 		this.pageHeight = this.pageHeight ? this.pageHeight : platform.screen.mainScreen.heightDIPs;
 	}
 
 	ngAfterViewInit() {
-
 		// loop through slides and setup height and widith
-
 		this.slides.forEach((slide: SlideComponent) => {
 			AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
 			slide.slideWidth = this.pageWidth;
@@ -75,6 +99,11 @@ export class SlidesComponent implements OnInit {
 		});
 
 		this.currentSlide = this.buildSlideMap(this.slides.toArray());
+
+		if (this.pageIndicators) {
+			this.buildFooter(this.slides.length);
+			this.setActivePageIndicator(0);
+		}
 		if (this.currentSlide) {
 			this.positionSlides(this.currentSlide);
 			this.applySwipe(this.pageWidth);
@@ -85,7 +114,38 @@ export class SlidesComponent implements OnInit {
 
 	}
 
+	//footer stuff
+	private buildFooter(pageCount: number = 5): void {
+		const sections = (this.pageHeight / 6);
+		const footerSection = (<StackLayout>this.footer.nativeElement);
 
+		footerSection.marginTop = (sections * 5);
+		footerSection.height = sections;
+		footerSection.horizontalAlignment = 'center';
+
+		footerSection.clipToBounds = false;
+
+		footerSection.orientation = 'horizontal';
+
+		let index = 0;
+		while (index < pageCount) {
+			this.indicators.push({ active: false });
+			index++;
+		}
+	}
+
+	setActivePageIndicator(activeIndex: number) {
+		this.indicators.map((indicator: IIndicators, index: number) => {
+			if (index == activeIndex) {
+				indicator.active = true;
+			} else {
+				indicator.active = false;
+			}
+		});
+
+		this.indicators = [...this.indicators];
+		this.ref.detectChanges();
+	}
 
 	// private  functions
 	private setupPanel(slide: ISlideMap) {
@@ -101,9 +161,9 @@ export class SlidesComponent implements OnInit {
 		this.applySwipe(this.pageWidth);
 		//}
 
-		// if (this.pageIndicators) {
-		// 	this.setActivePageIndicator(this.currentSlide.index);
-		// }
+		if (this.pageIndicators) {
+			this.setActivePageIndicator(this.currentSlide.index);
+		}
 	}
 
 	private positionSlides(slide: ISlideMap) {
@@ -334,6 +394,7 @@ export class SlidesComponent implements OnInit {
 		//this.triggerStartEvent();
 		this.showLeftSlide(this.currentSlide).then(() => {
 			this.setupPanel(this.currentSlide.left);
+
 			//this.triggerChangeEventLeftToRight();
 		});
 	}
