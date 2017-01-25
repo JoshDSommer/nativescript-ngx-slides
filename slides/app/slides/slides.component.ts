@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, OnDestroy, forwardRef, ViewChild, ContentChildren, ElementRef, QueryList, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, OnDestroy, forwardRef, ViewChild, ContentChildren, ElementRef, QueryList, Input, Output, EventEmitter } from '@angular/core';
 
 import { SlideComponent } from '../slide/slide.component';
 import * as gestures from 'ui/gestures';
@@ -64,6 +64,7 @@ export class SlidesComponent implements OnInit {
 	@Input('pageHeight') pageHeight: number;
 	@Input('loop') loop: boolean;
 	@Input('pageIndicators') pageIndicators: boolean;
+	@Output('tap') tap = new EventEmitter<gestures.GestureEventData>();
 
 	private transitioning: boolean;
 	private direction: direction = direction.none;
@@ -236,6 +237,10 @@ export class SlidesComponent implements OnInit {
 		let previousDelta = -1; //hack to get around ios firing pan event after release
 		let endingVelocity = 0;
 		let startTime, deltaTime;
+
+		this.currentSlide.slide.layout.on('tap', (args: gestures.GestureEventData): void => {
+			this.tap.next(args);
+		});
 
 		this.currentSlide.slide.layout.on('pan', (args: gestures.PanGestureEventData): void => {
 			if (args.state === gestures.GestureStateTypes.began) {
