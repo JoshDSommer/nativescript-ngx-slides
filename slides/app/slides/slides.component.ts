@@ -123,7 +123,9 @@ export class SlidesComponent implements OnInit {
 		footerSection.height = sections;
 		footerSection.horizontalAlignment = 'center';
 
-		footerSection.clipToBounds = false;
+		if (app.ios) {
+			footerSection.clipToBounds = false;
+		}
 
 		footerSection.orientation = 'horizontal';
 
