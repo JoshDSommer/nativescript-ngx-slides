@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { StackLayout } from 'ui/layouts/stack-layout';
 import * as gestures from 'ui/gestures';
 
@@ -15,6 +15,7 @@ import * as gestures from 'ui/gestures';
 export class SlideComponent implements OnInit {
 	@ViewChild('slideLayout') slideLayout: ElementRef;
 	@Input('class') cssClass: string;
+	@Output('tap') tap = new EventEmitter<gestures.GestureEventData>();
 
 	set slideWidth(width: number) {
 		this.layout.width = width;
@@ -33,8 +34,13 @@ export class SlideComponent implements OnInit {
 		this.cssClass = this.cssClass ? this.cssClass : '';
 	}
 
-	ngOnInit() { }
+	ngOnInit() {
+	}
 
-	ngAfterViewIn
+	ngAfterViewInit(){
+		this.slideLayout.nativeElement.on('tap', (args: gestures.GestureEventData): void => {
+			this.tap.next(args);
+		});
+	}
 
 }

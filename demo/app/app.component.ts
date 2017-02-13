@@ -5,7 +5,7 @@ import { Component } from "@angular/core";
     templateUrl: "app.component.html",
 })
 export class AppComponent {
-    public counter: number = 16;
+    public counter: number = 0;
 
     public get message(): string {
         if (this.counter > 0) {
@@ -15,7 +15,8 @@ export class AppComponent {
         }
     }
     
-    public onTap() {
-        this.counter--;
+    public onTap(item) {
+        console.log('Tapped: ' + item);
+        this.counter++;
     }
 }
