@@ -18,21 +18,7 @@
     "livesync.android": "cd slides  && tns livesync android --watch",
     "ios": "xcproj --project platforms/ios/YourApp.xcodeproj touch; xcproj --project platforms/ios/Pods/Pods.xcodeproj touch; tns livesync ios --emulator --watch"
   },
-  "dependencies": {
-    "@angular/common": "2.2.1",
-    "@angular/compiler": "2.2.1",
-    "@angular/core": "2.2.1",
-    "@angular/forms": "2.2.1",
-    "@angular/http": "2.2.1",
-    "@angular/platform-browser": "2.2.1",
-    "@angular/platform-browser-dynamic": "2.2.1",
-    "@angular/router": "3.2.1",
-    "nativescript-angular": "1.2.0",
-    "nativescript-theme-core": "^0.2.1",
-    "reflect-metadata": "~0.1.8",
-    "rxjs": "5.0.0-beta.12",
-    "tns-core-modules": "^2.5.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "nativescript-dev-android-snapshot": "^0.*.*",
     "nativescript-dev-typescript": "^0.3.2",
