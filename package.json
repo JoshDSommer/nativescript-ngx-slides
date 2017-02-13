@@ -1,13 +1,8 @@
 {
   "name": "@irman/nativescript-ng2-slides",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Angular Native(NativeScript + Angular 2) version of the slides. Forked from the original /nativescript-ng2-slides",
   "main": "index.js",
-  "nativescript": {
-    "tns-ios": {
-      "version": "2.4.0"
-    }
-  },
   "scripts": {
     "build": "tsc",
     "demo.ios": "npm run preparedemo && cd demo && tns emulate ios",
@@ -17,12 +12,6 @@
     "livesync.ios": "cd slides  && tns livesync ios --watch",
     "livesync.android": "cd slides  && tns livesync android --watch",
     "ios": "xcproj --project platforms/ios/YourApp.xcodeproj touch; xcproj --project platforms/ios/Pods/Pods.xcodeproj touch; tns livesync ios --emulator --watch"
-  },
-  "devDependencies": {
-    "nativescript-dev-android-snapshot": "^0.*.*",
-    "nativescript-dev-typescript": "^0.3.2",
-    "typescript": "~2.0.10",
-    "zone.js": "~0.6.21"
   },
   "repository": {
     "type": "git",
