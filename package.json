@@ -1,6 +1,6 @@
 {
   "name": "@irman/nativescript-ng2-slides",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Angular Native(NativeScript + Angular 2) version of the slides. Forked from the original /nativescript-ng2-slides",
   "main": "index.js",
   "scripts": {
