@@ -182,7 +182,7 @@ export class SlidesComponent implements OnInit {
 	private showRightSlide(slideMap: ISlideMap, offset: number = this.pageWidth, endingVelocity: number = 32, duration:number =300): AnimationModule.AnimationPromise {
 		let animationDuration: number;
 		animationDuration = duration; // default value
- 
+
 		let transition = new Array();
 
 		transition.push({
@@ -190,7 +190,7 @@ export class SlidesComponent implements OnInit {
 			translate: { x: -this.pageWidth, y: 0 },
 			duration: animationDuration,
 			curve: AnimationCurve.easeOut
-		}); 
+		});
 		transition.push({
 			target: slideMap.slide.layout,
 			translate: { x: -this.pageWidth * 2, y: 0 },
@@ -371,7 +371,7 @@ export class SlidesComponent implements OnInit {
 		return this._slideMap[0];
 	}
 
-	public GoToSlide(num : number, traverseDuration:number=50, landingDuration:number=200) : void 
+	public GoToSlide(num : number, traverseDuration:number=50, landingDuration:number=200) : void
 	{
 		if ( this.currentSlide.index == num) return;
 
