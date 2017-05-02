@@ -124,13 +124,9 @@ export class SlidesComponent implements OnInit {
 		footerSection.horizontalAlignment = 'center';
 
 		if (app.ios) {
-<<<<<<< HEAD
-			footerSection.clipToBounds = false;
-=======
 		    footerSection.clipToBounds = false;
 		} else if (app.android) {
 			footerSection.android.getParent().setClipChildren(false);
->>>>>>> origin/master
 		}
 
 		footerSection.orientation = 'horizontal';

@@ -1,7 +1,7 @@
 {
-  "name": "nativescript-ng2-slides",
+  "name": "nativescript-ngx-slides",
   "version": "0.0.9",
-  "description": "Angular Native(NativeScript + Angular 2) version of the slides",
+  "description": "NativeScript + Angular version of the slides",
   "main": "index.js",
   "nativescript": {
     "tns-ios": {
@@ -12,7 +12,7 @@
     "build": "tsc",
     "demo.ios": "npm run preparedemo && cd demo && tns emulate ios",
     "demo.android": "npm run preparedemo && cd demo && tns run android",
-    "preparedemo": "npm run build && cd demo && tns plugin remove nativescript-ng2-slides && tns plugin add .. && tns install",
+    "preparedemo": "npm run build && cd demo && tns plugin remove nativescript-ngx-slides && tns plugin add .. && tns install",
     "setup": "npm install && cd demo && npm install && cd .. && npm run build && cd demo && tns plugin add .. && cd ..",
     "livesync.ios": "cd slides  && tns livesync ios --watch",
     "livesync.android": "cd slides  && tns livesync android --watch",
@@ -41,7 +41,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TheOriginalJosh/nativescript-ng2-slides"
+    "url": "https://github.com/TheOriginalJosh/nativescript-ngx-slides"
   },
   "author": "Josh Sommer <joshdsommer@gmail.com> (https://twitter.com/_JoshSommer)",
   "license": "MIT"

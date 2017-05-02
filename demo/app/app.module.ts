@@ -1,14 +1,33 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
-import { NativeScriptModule } from "nativescript-angular/platform";
-
+import { NativeScriptModule } from "nativescript-angular/nativescript.module";
+import { AppRoutingModule } from "./app.routing";
 import { AppComponent } from "./app.component";
 
-import { SlidesModule } from 'nativescript-ng2-slides';
+import { ItemService } from "./item/item.service";
+import { ItemsComponent } from "./item/items.component";
+import { ItemDetailComponent } from "./item/item-detail.component";
+
+import { SlidesModule } from 'nativescript-ngx-slides';
 
 @NgModule({
-    declarations: [AppComponent],
-    bootstrap: [AppComponent],
-    imports: [NativeScriptModule, SlidesModule],
-    schemas: [NO_ERRORS_SCHEMA]
+    bootstrap: [
+        AppComponent
+    ],
+    imports: [
+        NativeScriptModule,
+        AppRoutingModule,
+        SlidesModule
+    ],
+    declarations: [
+        AppComponent,
+        ItemsComponent,
+        ItemDetailComponent
+    ],
+    providers: [
+        ItemService
+    ],
+    schemas: [
+        NO_ERRORS_SCHEMA
+    ]
 })
 export class AppModule { }
