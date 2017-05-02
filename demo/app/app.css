@@ -10,3 +10,31 @@ of writing your own CSS rules. For a full list of class names in the theme
 refer to http://docs.nativescript.org/ui/theme.
 */
 @import 'nativescript-theme-core/css/core.light.css';
+.slide-1{
+  background-color: darkslateblue;
+}
+
+.slide-2{
+  background-color: darkcyan;
+}
+.slide-3{
+  background-color: darkgreen;
+}
+
+.slide-4{
+  background-color: darkgoldenrod;
+}
+.slide-5{
+  background-color: darkslategray;
+}
+.slide-6{
+  background-color: darkorchid;
+}
+Label{
+  text-align: center;
+  width: 100%;
+  font-size: 35;
+  margin-top: 35;
+	color: #fff;
+
+}
