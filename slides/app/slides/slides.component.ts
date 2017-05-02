@@ -124,13 +124,7 @@ export class SlidesComponent implements OnInit {
 		footerSection.horizontalAlignment = 'center';
 
 		if (app.ios) {
-<<<<<<< HEAD
 			footerSection.clipToBounds = false;
-=======
-		    footerSection.clipToBounds = false;
-		} else if (app.android) {
-			footerSection.android.getParent().setClipChildren(false);
->>>>>>> origin/master
 		}
 
 		footerSection.orientation = 'horizontal';
@@ -185,10 +179,10 @@ export class SlidesComponent implements OnInit {
 		}
 	}
 
-	private showRightSlide(slideMap: ISlideMap, offset: number = this.pageWidth, endingVelocity: number = 32): AnimationModule.AnimationPromise {
+	private showRightSlide(slideMap: ISlideMap, offset: number = this.pageWidth, endingVelocity: number = 32, duration:number =300): AnimationModule.AnimationPromise {
 		let animationDuration: number;
-		animationDuration = 300; // default value
-
+		animationDuration = duration; // default value
+ 
 		let transition = new Array();
 
 		transition.push({
@@ -196,7 +190,7 @@ export class SlidesComponent implements OnInit {
 			translate: { x: -this.pageWidth, y: 0 },
 			duration: animationDuration,
 			curve: AnimationCurve.easeOut
-		});
+		}); 
 		transition.push({
 			target: slideMap.slide.layout,
 			translate: { x: -this.pageWidth * 2, y: 0 },
@@ -208,10 +202,10 @@ export class SlidesComponent implements OnInit {
 		return animationSet.play();
 	}
 
-	private showLeftSlide(slideMap: ISlideMap, offset: number = this.pageWidth, endingVelocity: number = 32): AnimationModule.AnimationPromise {
+	private showLeftSlide(slideMap: ISlideMap, offset: number = this.pageWidth, endingVelocity: number = 32, duration:number =300): AnimationModule.AnimationPromise {
 
 		let animationDuration: number;
-		animationDuration = 300; // default value
+		animationDuration = duration; // default value
 		let transition = new Array();
 
 		transition.push({
@@ -377,7 +371,20 @@ export class SlidesComponent implements OnInit {
 		return this._slideMap[0];
 	}
 
-	public nextSlide(): void {
+	public GoToSlide(num : number, traverseDuration:number=50, landingDuration:number=200) : void 
+	{
+		if ( this.currentSlide.index == num) return;
+
+		var duration:number=landingDuration;
+		if  ( Math.abs(num-this.currentSlide.index)!=1) duration=traverseDuration;
+
+		if ( this.currentSlide.index<num)
+			this.nextSlide(duration).then( () => this.GoToSlide(num));
+		else
+			this.previousSlide(duration).then( () => this.GoToSlide(num));
+	}
+
+	public nextSlide(duration? : number ): Promise<any> {
 		if (!this.hasNext) {
 			//this.triggerCancelEvent(cancellationReason.noMoreSlides);
 			return;
@@ -386,12 +393,14 @@ export class SlidesComponent implements OnInit {
 		this.direction = direction.left;
 		this.transitioning = true;
 		//	this.triggerStartEvent();
-		this.showRightSlide(this.currentSlide).then(() => {
+		return this.showRightSlide(this.currentSlide,null,null,duration).then(() => {
 			this.setupPanel(this.currentSlide.right);
 			//this.triggerChangeEventRightToLeft();
 		});
 	}
-	public previousSlide(): void {
+
+
+	public previousSlide(duration? : number ): Promise<any> {
 		if (!this.hasPrevious) {
 			//this.triggerCancelEvent(cancellationReason.noPrevSlides);
 			return;
@@ -400,7 +409,7 @@ export class SlidesComponent implements OnInit {
 		this.direction = direction.right;
 		this.transitioning = true;
 		//this.triggerStartEvent();
-		this.showLeftSlide(this.currentSlide).then(() => {
+		return this.showLeftSlide(this.currentSlide, null, null, duration).then(() => {
 			this.setupPanel(this.currentSlide.left);
 
 			//this.triggerChangeEventLeftToRight();
