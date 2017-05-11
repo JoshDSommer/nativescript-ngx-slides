@@ -9,8 +9,8 @@
 		"**/debug/": true,
 		"**/release/": true,
 		"**/tests/": true,
-		"demo/**/*.js": true,
-		"demo/**/*.js.map": true,
-		"demo/**/*.d.ts": true
+		"**/*.js": true,
+		"**/*.js.map": true,
+		"**/*.d.ts": true
 	}
 }

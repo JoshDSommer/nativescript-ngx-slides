@@ -43,7 +43,6 @@ enum cancellationReason {
 				[class.slide-indicator-active]="indicator.active == true"
 				[class.slide-indicator-inactive]="indicator.active == false	"
 			></Label>
-
 		</StackLayout>
 	</AbsoluteLayout>
 	`,

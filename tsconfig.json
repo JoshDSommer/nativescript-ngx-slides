@@ -2,15 +2,16 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es5",
+        "sourceMap": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "noEmitHelpers": true,
-        "noEmitOnError": false
+        "noEmitHelpers": false,
+		"noEmitOnError": false,
+		"noEmit": false,
+        "allowUnreachableCode": true,
+        "skipLibCheck": true
     },
-    "exclude": [
-        "node_modules",
-        "demo",
-        "slides",
-        "slides_old"
+    "files": [
+        "index.ts"
     ]
 }
