@@ -36,9 +36,9 @@ enum cancellationReason {
 @Component({
 	selector: 'slides',
 	template: `
-	<AbsoluteLayout>
+	<AbsoluteLayout width="100%">
 		<ng-content></ng-content>
-		<StackLayout *ngIf="pageIndicators" #footer orientation="horizontal" class="footer">
+		<StackLayout *ngIf="pageIndicators" #footer class="slide-footer">
 			<Label *ngFor="let indicator of indicators"
 				[class.slide-indicator-active]="indicator.active == true"
 				[class.slide-indicator-inactive]="indicator.active == false	"
@@ -47,10 +47,9 @@ enum cancellationReason {
 	</AbsoluteLayout>
 	`,
 	styles: [`
-		.footer{
+		.slide-footer{
 			width:100%;
-			height:20%
-			horizontal-align:center;
+			height:20%;
 		}
 	`],
 	encapsulation: ViewEncapsulation.None
@@ -118,16 +117,20 @@ export class SlidesComponent implements OnInit {
 		const sections = (this.pageHeight / 6);
 		const footerSection = (<StackLayout>this.footer.nativeElement);
 
-		footerSection.marginTop = (sections * 5);
 		footerSection.height = sections;
+		footerSection.width = this.pageWidth;
 		footerSection.horizontalAlignment = 'center';
 
 		if (app.ios) {
+			footerSection.marginTop = (sections * 5);
 			footerSection.clipToBounds = false;
+		} else {
+				footerSection.marginTop = (sections * 4);
 		}
 
 		footerSection.orientation = 'horizontal';
 
+		footerSection.borderColor = "red";
 		let index = 0;
 		while (index < pageCount) {
 			this.indicators.push({ active: false });
@@ -178,7 +181,7 @@ export class SlidesComponent implements OnInit {
 		}
 	}
 
-	private showRightSlide(slideMap: ISlideMap, offset: number = this.pageWidth, endingVelocity: number = 32, duration:number =300): AnimationModule.AnimationPromise {
+	private showRightSlide(slideMap: ISlideMap, offset: number = this.pageWidth, endingVelocity: number = 32, duration: number = 300): AnimationModule.AnimationPromise {
 		let animationDuration: number;
 		animationDuration = duration; // default value
 
@@ -201,7 +204,7 @@ export class SlidesComponent implements OnInit {
 		return animationSet.play();
 	}
 
-	private showLeftSlide(slideMap: ISlideMap, offset: number = this.pageWidth, endingVelocity: number = 32, duration:number =300): AnimationModule.AnimationPromise {
+	private showLeftSlide(slideMap: ISlideMap, offset: number = this.pageWidth, endingVelocity: number = 32, duration: number = 300): AnimationModule.AnimationPromise {
 
 		let animationDuration: number;
 		animationDuration = duration; // default value
@@ -370,20 +373,19 @@ export class SlidesComponent implements OnInit {
 		return this._slideMap[0];
 	}
 
-	public GoToSlide(num : number, traverseDuration:number=50, landingDuration:number=200) : void
-	{
-		if ( this.currentSlide.index == num) return;
+	public GoToSlide(num: number, traverseDuration: number = 50, landingDuration: number = 200): void {
+		if (this.currentSlide.index == num) return;
 
-		var duration:number=landingDuration;
-		if  ( Math.abs(num-this.currentSlide.index)!=1) duration=traverseDuration;
+		var duration: number = landingDuration;
+		if (Math.abs(num - this.currentSlide.index) != 1) duration = traverseDuration;
 
-		if ( this.currentSlide.index<num)
-			this.nextSlide(duration).then( () => this.GoToSlide(num));
+		if (this.currentSlide.index < num)
+			this.nextSlide(duration).then(() => this.GoToSlide(num));
 		else
-			this.previousSlide(duration).then( () => this.GoToSlide(num));
+			this.previousSlide(duration).then(() => this.GoToSlide(num));
 	}
 
-	public nextSlide(duration? : number ): Promise<any> {
+	public nextSlide(duration?: number): Promise<any> {
 		if (!this.hasNext) {
 			//this.triggerCancelEvent(cancellationReason.noMoreSlides);
 			return;
@@ -392,14 +394,14 @@ export class SlidesComponent implements OnInit {
 		this.direction = direction.left;
 		this.transitioning = true;
 		//	this.triggerStartEvent();
-		return this.showRightSlide(this.currentSlide,null,null,duration).then(() => {
+		return this.showRightSlide(this.currentSlide, null, null, duration).then(() => {
 			this.setupPanel(this.currentSlide.right);
 			//this.triggerChangeEventRightToLeft();
 		});
 	}
 
 
-	public previousSlide(duration? : number ): Promise<any> {
+	public previousSlide(duration?: number): Promise<any> {
 		if (!this.hasPrevious) {
 			//this.triggerCancelEvent(cancellationReason.noPrevSlides);
 			return;
