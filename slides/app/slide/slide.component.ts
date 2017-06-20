@@ -12,7 +12,7 @@ import * as gestures from 'ui/gestures';
 	`,
 })
 
-export class SlideComponent implements OnInit {
+export class SlideComponent {
 	@ViewChild('slideLayout') slideLayout: ElementRef;
 	@Input('class') cssClass: string;
 
@@ -32,9 +32,4 @@ export class SlideComponent implements OnInit {
 	constructor() {
 		this.cssClass = this.cssClass ? this.cssClass : '';
 	}
-
-	ngOnInit() { }
-
-	ngAfterViewIn
-
 }
