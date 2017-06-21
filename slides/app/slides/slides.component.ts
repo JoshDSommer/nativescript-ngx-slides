@@ -9,6 +9,7 @@ import * as app from 'application';
 import { AbsoluteLayout } from 'ui/layouts/absolute-layout';
 import { StackLayout } from 'ui/layouts/stack-layout';
 import { Label } from 'ui/label';
+import { View } from 'ui/view';
 
 export interface IIndicators {
 	active: boolean;
@@ -82,10 +83,42 @@ export class SlidesComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		
 		this.loop = this.loop ? this.loop : false;
 		this.pageIndicators = this.pageIndicators ? this.pageIndicators : false;
 		this.pageWidth = this.pageWidth ? this.pageWidth : platform.screen.mainScreen.widthDIPs;
 		this.pageHeight = this.pageHeight ? this.pageHeight : platform.screen.mainScreen.heightDIPs;
+
+		// handles application orientation change
+		app.on(app.orientationChangedEvent, (args: app.OrientationChangedEventData) => {
+		
+			// event and page orientation didn't seem to alwasy be on the same page so
+			// setting it in the time out addresses this.
+			setTimeout(() => {
+
+				console.log('orientationChangedEvent');
+				this.pageWidth = platform.screen.mainScreen.widthDIPs;
+				this.pageHeight = platform.screen.mainScreen.heightDIPs;
+
+				// loop through slides and setup height and widith
+				this.slides.forEach((slide: SlideComponent) => {
+					AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
+					slide.slideWidth = this.pageWidth;
+					slide.slideHeight = this.pageHeight;
+					slide.layout.eachLayoutChild((view: View) => {
+						if (view instanceof StackLayout) {
+							AbsoluteLayout.setLeft(view, this.pageWidth);
+							view.width = this.pageWidth;
+						}
+					});
+				});
+
+				if (this.currentSlide) {
+					this.positionSlides(this.currentSlide);
+					this.applySwipe(this.pageWidth);
+				}
+			}, 0);
+		});	
 	}
 
 	ngAfterViewInit() {
