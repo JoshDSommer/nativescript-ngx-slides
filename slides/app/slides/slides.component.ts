@@ -82,10 +82,13 @@ export class SlidesComponent implements OnInit {
 	}
 
 	ngOnInit() {
+
 		this.loop = this.loop ? this.loop : false;
 		this.pageIndicators = this.pageIndicators ? this.pageIndicators : false;
 		this.pageWidth = this.pageWidth ? this.pageWidth : platform.screen.mainScreen.widthDIPs;
 		this.pageHeight = this.pageHeight ? this.pageHeight : platform.screen.mainScreen.heightDIPs;
+		// handle orientation change
+		app.on(app.orientationChangedEvent, this.onOrientationChanged, this);
 	}
 
 	ngAfterViewInit() {
@@ -109,10 +112,54 @@ export class SlidesComponent implements OnInit {
 	}
 
 	ngOnDestroy() {
-
+		app.off(app.orientationChangedEvent, this.onOrientationChanged, this);
 	}
 
-	//footer stuff
+	onOrientationChanged(args: app.OrientationChangedEventData) {
+		// event and page orientation didn't seem to always be on the same page so
+		// setting it in the time out addresses this.
+		setTimeout(() => {
+			// the values are either 'landscape' or 'portrait'
+			// platform.screen.mainScreen.heightDIPs/widthDIPs holds original screen size
+			if (args.newValue === 'landscape') {
+				this.pageWidth = platform.screen.mainScreen.heightDIPs;
+				this.pageHeight = platform.screen.mainScreen.widthDIPs;
+			} else {
+				this.pageWidth = platform.screen.mainScreen.widthDIPs;
+				this.pageHeight = platform.screen.mainScreen.heightDIPs;
+			}
+
+			/*
+			console.log(' ============================== ');
+			console.log('widthDIPs: ' + platform.screen.mainScreen.widthDIPs);
+			console.log('heightDIPs: ' + platform.screen.mainScreen.heightDIPs);
+			console.log(' ---------------------- ');
+			console.log('this.pageWidth: ' + this.pageWidth);
+			console.log('this.pageHeight: ' + this.pageHeight);
+			console.log(' ============================== ');*/
+
+			// loop through slides and setup height and widith
+			this.slides.forEach((slide: SlideComponent) => {
+				AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
+				slide.slideWidth = this.pageWidth;
+				slide.slideHeight = this.pageHeight;
+				slide.layout.eachLayoutChild((view: any) => {
+					if (view instanceof StackLayout) {
+						AbsoluteLayout.setLeft(view, this.pageWidth);
+						view.width = this.pageWidth;
+					}
+				});
+			});
+
+			if (this.currentSlide) {
+				this.positionSlides(this.currentSlide);
+				this.applySwipe(this.pageWidth);
+			}
+
+		}, 17); // one frame @ 60 frames/s, no flicker
+	}
+
+	// footer stuff
 	private buildFooter(pageCount: number = 5): void {
 		const sections = (this.pageHeight / 6);
 		const footerSection = (<StackLayout>this.footer.nativeElement);
