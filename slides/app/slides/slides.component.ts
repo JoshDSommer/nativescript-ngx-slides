@@ -122,8 +122,14 @@ export class SlidesComponent implements OnInit {
 			// the values are either 'landscape' or 'portrait'
 			// platform.screen.mainScreen.heightDIPs/widthDIPs holds original screen size
 			if (args.newValue === 'landscape') {
-				this.pageWidth = platform.screen.mainScreen.heightDIPs;
-				this.pageHeight = platform.screen.mainScreen.widthDIPs;
+				if (app.android) { //this behavior doesn't seem consistant across platforms
+					this.pageWidth = platform.screen.mainScreen.heightDIPs;
+					this.pageHeight = platform.screen.mainScreen.widthDIPs;
+				} else {
+					this.pageWidth = platform.screen.mainScreen.widthDIPs;
+					this.pageHeight = platform.screen.mainScreen.heightDIPs;
+				}
+
 			} else {
 				this.pageWidth = platform.screen.mainScreen.widthDIPs;
 				this.pageHeight = platform.screen.mainScreen.heightDIPs;
@@ -155,8 +161,9 @@ export class SlidesComponent implements OnInit {
 				this.positionSlides(this.currentSlide);
 				this.applySwipe(this.pageWidth);
 			}
+			this.buildFooter(this.slides.length);
 
-		}, 17); // one frame @ 60 frames/s, no flicker
+		}, 50); // one frame @ 60 frames/s, no flicker
 	}
 
 	// footer stuff
@@ -172,7 +179,7 @@ export class SlidesComponent implements OnInit {
 			footerSection.marginTop = (sections * 5);
 			footerSection.clipToBounds = false;
 		} else {
-				footerSection.marginTop = (sections * 4);
+			footerSection.marginTop = (sections * 4);
 		}
 
 		footerSection.orientation = 'horizontal';
