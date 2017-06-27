@@ -116,34 +116,23 @@ export class SlidesComponent implements OnInit {
 	}
 
 	onOrientationChanged(args: app.OrientationChangedEventData) {
+
 		// event and page orientation didn't seem to always be on the same page so
 		// setting it in the time out addresses this.
 		setTimeout(() => {
+			
 			// the values are either 'landscape' or 'portrait'
 			// platform.screen.mainScreen.heightDIPs/widthDIPs holds original screen size
 			if (args.newValue === 'landscape') {
-				if (app.android) { //this behavior doesn't seem consistant across platforms
-					this.pageWidth = platform.screen.mainScreen.heightDIPs;
-					this.pageHeight = platform.screen.mainScreen.widthDIPs;
-				} else {
-					this.pageWidth = platform.screen.mainScreen.widthDIPs;
-					this.pageHeight = platform.screen.mainScreen.heightDIPs;
-				}
-
+				this.pageWidth = (app.android) ?
+									platform.screen.mainScreen.heightDIPs : platform.screen.mainScreen.widthDIPs;
+				this.pageHeight = (app.android) ?
+									platform.screen.mainScreen.widthDIPs : platform.screen.mainScreen.heightDIPs;
 			} else {
 				this.pageWidth = platform.screen.mainScreen.widthDIPs;
 				this.pageHeight = platform.screen.mainScreen.heightDIPs;
 			}
-
-			/*
-			console.log(' ============================== ');
-			console.log('widthDIPs: ' + platform.screen.mainScreen.widthDIPs);
-			console.log('heightDIPs: ' + platform.screen.mainScreen.heightDIPs);
-			console.log(' ---------------------- ');
-			console.log('this.pageWidth: ' + this.pageWidth);
-			console.log('this.pageHeight: ' + this.pageHeight);
-			console.log(' ============================== ');*/
-
+			
 			// loop through slides and setup height and widith
 			this.slides.forEach((slide: SlideComponent) => {
 				AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
@@ -153,13 +142,13 @@ export class SlidesComponent implements OnInit {
 					if (view instanceof StackLayout) {
 						AbsoluteLayout.setLeft(view, this.pageWidth);
 						view.width = this.pageWidth;
+						view.height = this.pageHeight;
 					}
 				});
 			});
 
 			if (this.currentSlide) {
 				this.positionSlides(this.currentSlide);
-				this.applySwipe(this.pageWidth);
 			}
 			this.buildFooter(this.slides.length);
 
@@ -184,7 +173,7 @@ export class SlidesComponent implements OnInit {
 
 		footerSection.orientation = 'horizontal';
 
-		footerSection.borderColor = "red";
+		footerSection.borderColor = 'red';
 		let index = 0;
 		while (index < pageCount) {
 			this.indicators.push({ active: false });
@@ -194,7 +183,7 @@ export class SlidesComponent implements OnInit {
 
 	setActivePageIndicator(activeIndex: number) {
 		this.indicators.map((indicator: IIndicators, index: number) => {
-			if (index == activeIndex) {
+			if (index === activeIndex) {
 				indicator.active = true;
 			} else {
 				indicator.active = false;
