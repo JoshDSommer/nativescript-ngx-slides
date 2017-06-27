@@ -150,8 +150,9 @@ export class SlidesComponent implements OnInit {
 			if (this.currentSlide) {
 				this.positionSlides(this.currentSlide);
 			}
+			this.buildFooter(this.slides.length);
 
-		}, 17); // one frame @ 60 frames/s, no flicker
+		}, 50); // one frame @ 60 frames/s, no flicker
 	}
 
 	// footer stuff
@@ -167,7 +168,7 @@ export class SlidesComponent implements OnInit {
 			footerSection.marginTop = (sections * 5);
 			footerSection.clipToBounds = false;
 		} else {
-				footerSection.marginTop = (sections * 4);
+			footerSection.marginTop = (sections * 4);
 		}
 
 		footerSection.orientation = 'horizontal';
