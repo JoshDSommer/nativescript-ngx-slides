@@ -1,7 +1,5 @@
-<ActionBar title="My App" class="action-bar">
-</ActionBar>
 <StackLayout class="page">
-	<slides [loop]="true">
+	<slides [loop]="true" [pageIndicators]="true">
 		<slide [class]="'slide-' + (i + 1)" *ngFor="let item of items;let i = index;">
 			<Label [text]="'This is Panel ' + (i + 1)"></Label>
 			<Label [nsRouterLink]="['/item', item.id]" [text]="item.name" class="list-group-item"></Label>
