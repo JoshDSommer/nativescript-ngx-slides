@@ -280,7 +280,7 @@ export class SlidesComponent implements OnInit {
 		let previousDelta = -1; //hack to get around ios firing pan event after release
 		let endingVelocity = 0;
 		let startTime, deltaTime;
-
+		this.transitioning = false;
 		this.currentSlide.slide.layout.on('pan', (args: gestures.PanGestureEventData): void => {
 			if (args.state === gestures.GestureStateTypes.began) {
 				startTime = Date.now();
