@@ -179,6 +179,10 @@ export class SlidesComponent implements OnInit {
 		footerSection.orientation = 'horizontal';
 
 		footerSection.borderColor = 'red';
+		//clear any existing indicators
+		if (this.indicators.length) {
+			this.indicators = [];
+		}
 		let index = 0;
 		while (index < pageCount) {
 			this.indicators.push({ active: false });
