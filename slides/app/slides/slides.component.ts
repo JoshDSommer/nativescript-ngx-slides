@@ -120,19 +120,19 @@ export class SlidesComponent implements OnInit {
 		// event and page orientation didn't seem to always be on the same page so
 		// setting it in the time out addresses this.
 		setTimeout(() => {
-			
+
 			// the values are either 'landscape' or 'portrait'
 			// platform.screen.mainScreen.heightDIPs/widthDIPs holds original screen size
 			if (args.newValue === 'landscape') {
 				this.pageWidth = (app.android) ?
-									platform.screen.mainScreen.heightDIPs : platform.screen.mainScreen.widthDIPs;
+					platform.screen.mainScreen.heightDIPs : platform.screen.mainScreen.widthDIPs;
 				this.pageHeight = (app.android) ?
-									platform.screen.mainScreen.widthDIPs : platform.screen.mainScreen.heightDIPs;
+					platform.screen.mainScreen.widthDIPs : platform.screen.mainScreen.heightDIPs;
 			} else {
 				this.pageWidth = platform.screen.mainScreen.widthDIPs;
 				this.pageHeight = platform.screen.mainScreen.heightDIPs;
 			}
-			
+
 			// loop through slides and setup height and widith
 			this.slides.forEach((slide: SlideComponent) => {
 				AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
@@ -158,7 +158,12 @@ export class SlidesComponent implements OnInit {
 	// footer stuff
 	private buildFooter(pageCount: number = 5): void {
 		const sections = (this.pageHeight / 6);
+		if (!this.footer)
+			return;
+
 		const footerSection = (<StackLayout>this.footer.nativeElement);
+		if (!footerSection)
+			return;
 
 		footerSection.height = sections;
 		footerSection.width = this.pageWidth;
