@@ -1,6 +1,6 @@
 {
   "name": "nativescript-ngx-slides",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "NativeScript + Angular version of the slides",
   "main": "index",
   "nativescript": {
