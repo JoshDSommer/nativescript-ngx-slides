@@ -36,7 +36,7 @@ enum cancellationReason {
 @Component({
 	selector: 'slides',
 	template: `
-	<AbsoluteLayout width="100%">
+	<AbsoluteLayout width="100%" [class]="cssClass">
 		<ng-content></ng-content>
 		<StackLayout *ngIf="pageIndicators" #footer class="slide-footer">
 			<Label *ngFor="let indicator of indicators"
@@ -62,6 +62,7 @@ export class SlidesComponent implements OnInit {
 	@Input('pageHeight') pageHeight: number;
 	@Input('loop') loop: boolean;
 	@Input('pageIndicators') pageIndicators: boolean;
+	@Input('class') cssClass: string;
 
 	private transitioning: boolean;
 	private direction: direction = direction.none;
