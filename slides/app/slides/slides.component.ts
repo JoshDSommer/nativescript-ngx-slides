@@ -62,7 +62,7 @@ export class SlidesComponent implements OnInit {
 	@Input('pageHeight') pageHeight: number;
 	@Input('loop') loop: boolean;
 	@Input('pageIndicators') pageIndicators: boolean;
-	@Input('class') cssClass: string;
+	@Input('class') cssClass: string = '';
 
 	private transitioning: boolean;
 	private direction: direction = direction.none;
