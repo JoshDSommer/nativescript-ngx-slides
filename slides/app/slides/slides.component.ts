@@ -36,35 +36,32 @@ enum cancellationReason {
 @Component({
 	selector: 'slides',
 	template: `
-	<AbsoluteLayout width="100%">
+	<AbsoluteLayout width="100%">		
 		<ng-content></ng-content>
-		<StackLayout *ngIf="pageIndicators" #footer class="slide-footer">
+		<StackLayout *ngIf="pageIndicators" #footer style="width:100%; height:20%;">
 			<Label *ngFor="let indicator of indicators"
 				[class.slide-indicator-active]="indicator.active == true"
 				[class.slide-indicator-inactive]="indicator.active == false	"
 			></Label>
-		</StackLayout>
+		</StackLayout>		
 	</AbsoluteLayout>
-	`,
-	styles: [`
-		.slide-footer{
-			width:100%;
-			height:20%;
-		}
-	`],
+	`,	
 	encapsulation: ViewEncapsulation.None
 })
 
 export class SlidesComponent implements OnInit {
+	
 	@ContentChildren(forwardRef(() => SlideComponent)) slides: QueryList<SlideComponent>;
 	@ViewChild('footer') footer: ElementRef;
 	@Input('pageWidth') pageWidth: number;
 	@Input('pageHeight') pageHeight: number;
+	@Input('footerMarginTop') footerMarginTop: number;
 	@Input('loop') loop: boolean;
 	@Input('pageIndicators') pageIndicators: boolean;
 
 	private transitioning: boolean;
 	private direction: direction = direction.none;
+	private FOOTER_HEIGHT: number = 50;
 
 	indicators: IIndicators[];
 	currentSlide: ISlideMap;
@@ -87,6 +84,7 @@ export class SlidesComponent implements OnInit {
 		this.pageIndicators = this.pageIndicators ? this.pageIndicators : false;
 		this.pageWidth = this.pageWidth ? this.pageWidth : platform.screen.mainScreen.widthDIPs;
 		this.pageHeight = this.pageHeight ? this.pageHeight : platform.screen.mainScreen.heightDIPs;
+		this.footerMarginTop = this.footerMarginTop ? this.footerMarginTop : this.calculateFoorterMarginTop(this.pageHeight);
 		// handle orientation change
 		app.on(app.orientationChangedEvent, this.onOrientationChanged, this);
 	}
@@ -97,17 +95,19 @@ export class SlidesComponent implements OnInit {
 			AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
 			slide.slideWidth = this.pageWidth;
 			slide.slideHeight = this.pageHeight;
+			
 		});
 
 		this.currentSlide = this.buildSlideMap(this.slides.toArray());
 
-		if (this.pageIndicators) {
-			this.buildFooter(this.slides.length);
-			this.setActivePageIndicator(0);
-		}
 		if (this.currentSlide) {
 			this.positionSlides(this.currentSlide);
 			this.applySwipe(this.pageWidth);
+		}
+
+		if (this.pageIndicators) {
+			this.buildFooter(this.slides.length);
+			this.setActivePageIndicator(0);
 		}
 	}
 
@@ -132,7 +132,8 @@ export class SlidesComponent implements OnInit {
 				this.pageWidth = platform.screen.mainScreen.widthDIPs;
 				this.pageHeight = platform.screen.mainScreen.heightDIPs;
 			}
-			
+			this.footerMarginTop = this.calculateFoorterMarginTop(this.pageHeight);
+
 			// loop through slides and setup height and widith
 			this.slides.forEach((slide: SlideComponent) => {
 				AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
@@ -150,35 +151,41 @@ export class SlidesComponent implements OnInit {
 			if (this.currentSlide) {
 				this.positionSlides(this.currentSlide);
 			}
-			this.buildFooter(this.slides.length);
 
-		}, 50); // one frame @ 60 frames/s, no flicker
+			if (this.pageIndicators) {
+				this.buildFooter(this.slides.length);				
+			}
+
+
+		}, 17); // one frame @ 60 frames/s, no flicker
+	}
+
+	private calculateFoorterMarginTop(pageHeight: number): number {
+		// return ((app.ios) ? (pageHeight / 6) * 5 : (pageHeight / 6) * 4);
+		return (pageHeight / 2);
+		
 	}
 
 	// footer stuff
 	private buildFooter(pageCount: number = 5): void {
-		const sections = (this.pageHeight / 6);
+		
 		const footerSection = (<StackLayout>this.footer.nativeElement);
-
-		footerSection.height = sections;
-		footerSection.width = this.pageWidth;
-		footerSection.horizontalAlignment = 'center';
-
-		if (app.ios) {
-			footerSection.marginTop = (sections * 5);
-			footerSection.clipToBounds = false;
-		} else {
-			footerSection.marginTop = (sections * 4);
-		}
-
+		footerSection.horizontalAlignment = 'center';		
 		footerSection.orientation = 'horizontal';
+		footerSection.marginTop = this.footerMarginTop;
+		footerSection.height = this.FOOTER_HEIGHT;
+		footerSection.width = this.pageWidth;
+		
+		if (app.ios) {			
+			footerSection.clipToBounds = false;
+		} 
 
-		footerSection.borderColor = 'red';
 		let index = 0;
+		this.indicators = [];
 		while (index < pageCount) {
 			this.indicators.push({ active: false });
 			index++;
-		}
+		}		
 	}
 
 	setActivePageIndicator(activeIndex: number) {
