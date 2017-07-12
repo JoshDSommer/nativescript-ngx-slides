@@ -36,7 +36,7 @@ enum cancellationReason {
 @Component({
 	selector: 'slides',
 	template: `
-	<AbsoluteLayout width="100%">		
+	<AbsoluteLayout width="100%">	
 		<ng-content></ng-content>
 		<StackLayout *ngIf="pageIndicators" #footer style="width:100%; height:20%;">
 			<Label *ngFor="let indicator of indicators"
@@ -58,6 +58,7 @@ export class SlidesComponent implements OnInit {
 	@Input('footerMarginTop') footerMarginTop: number;
 	@Input('loop') loop: boolean;
 	@Input('pageIndicators') pageIndicators: boolean;
+	@Input('class') cssClass: string = '';
 
 	private transitioning: boolean;
 	private direction: direction = direction.none;
@@ -120,18 +121,19 @@ export class SlidesComponent implements OnInit {
 		// event and page orientation didn't seem to always be on the same page so
 		// setting it in the time out addresses this.
 		setTimeout(() => {
-			
+
 			// the values are either 'landscape' or 'portrait'
 			// platform.screen.mainScreen.heightDIPs/widthDIPs holds original screen size
 			if (args.newValue === 'landscape') {
 				this.pageWidth = (app.android) ?
-									platform.screen.mainScreen.heightDIPs : platform.screen.mainScreen.widthDIPs;
+					platform.screen.mainScreen.heightDIPs : platform.screen.mainScreen.widthDIPs;
 				this.pageHeight = (app.android) ?
-									platform.screen.mainScreen.widthDIPs : platform.screen.mainScreen.heightDIPs;
+					platform.screen.mainScreen.widthDIPs : platform.screen.mainScreen.heightDIPs;
 			} else {
 				this.pageWidth = platform.screen.mainScreen.widthDIPs;
 				this.pageHeight = platform.screen.mainScreen.heightDIPs;
 			}
+
 			this.footerMarginTop = this.calculateFoorterMarginTop(this.pageHeight);
 
 			// loop through slides and setup height and widith
@@ -174,6 +176,7 @@ export class SlidesComponent implements OnInit {
 		footerSection.orientation = 'horizontal';
 		footerSection.marginTop = this.footerMarginTop;
 		footerSection.height = this.FOOTER_HEIGHT;
+
 		footerSection.width = this.pageWidth;
 		
 		if (app.ios) {			
@@ -282,7 +285,7 @@ export class SlidesComponent implements OnInit {
 		let previousDelta = -1; //hack to get around ios firing pan event after release
 		let endingVelocity = 0;
 		let startTime, deltaTime;
-
+		this.transitioning = false;
 		this.currentSlide.slide.layout.on('pan', (args: gestures.PanGestureEventData): void => {
 			if (args.state === gestures.GestureStateTypes.began) {
 				startTime = Date.now();

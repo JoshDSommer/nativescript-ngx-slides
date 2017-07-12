@@ -14,7 +14,7 @@ import * as gestures from 'ui/gestures';
 
 export class SlideComponent {
 	@ViewChild('slideLayout') slideLayout: ElementRef;
-	@Input('class') cssClass: string;
+	@Input('class') cssClass: string = '';
 
 	set slideWidth(width: number) {
 		this.layout.width = width;

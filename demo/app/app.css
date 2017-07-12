@@ -38,3 +38,24 @@ Label{
 	color: #fff;
 
 }
+.slide-indicator-inactive{
+    background-color: #fff;
+    opacity : 0.4;
+    width : 10;
+    height : 10;
+    margin-left : 2.5;
+    margin-right : 2.5;
+    margin-top : -100;
+    border-radius : 5;
+}
+
+.slide-indicator-active{
+    background-color: #fff;
+    opacity : 0.9;
+    width : 10;
+    height : 10;
+    margin-left : 2.5;
+    margin-right : 2.5;
+    margin-top : -100;
+    border-radius : 5;
+}
