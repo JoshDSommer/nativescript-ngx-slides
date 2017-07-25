@@ -155,40 +155,11 @@ export class SlidesComponent implements OnInit {
 			}
 
 			if (this.pageIndicators) {
-				this.buildFooter(this.slides.length);				
+				this.buildFooter(this.slides.length);
 			}
 
 
 		}, 17); // one frame @ 60 frames/s, no flicker
-	}
-
-	private calculateFoorterMarginTop(pageHeight: number): number {
-		// return ((app.ios) ? (pageHeight / 6) * 5 : (pageHeight / 6) * 4);
-		return (pageHeight / 2);
-		
-	}
-
-	// footer stuff
-	private buildFooter(pageCount: number = 5): void {
-		
-		const footerSection = (<StackLayout>this.footer.nativeElement);
-		footerSection.horizontalAlignment = 'center';		
-		footerSection.orientation = 'horizontal';
-		footerSection.marginTop = this.footerMarginTop;
-		footerSection.height = this.FOOTER_HEIGHT;
-
-		footerSection.width = this.pageWidth;
-		
-		if (app.ios) {			
-			footerSection.clipToBounds = false;
-		} 
-
-		let index = 0;
-		this.indicators = [];
-		while (index < pageCount) {
-			this.indicators.push({ active: false });
-			index++;
-		}		
 	}
 
 	setActivePageIndicator(activeIndex: number) {
@@ -204,7 +175,37 @@ export class SlidesComponent implements OnInit {
 		this.ref.detectChanges();
 	}
 
+	//
 	// private  functions
+	//
+
+	// position footer
+	private calculateFoorterMarginTop(pageHeight: number): number {
+		return pageHeight - (pageHeight / 6);
+	}
+
+	// footer stuff
+	private buildFooter(pageCount: number = 5): void {
+
+		const footerSection = (<StackLayout>this.footer.nativeElement);
+		footerSection.horizontalAlignment = 'center';
+		footerSection.orientation = 'horizontal';
+		footerSection.marginTop = this.footerMarginTop;
+		footerSection.height = this.FOOTER_HEIGHT;
+		footerSection.width = this.pageWidth;
+
+		if (app.ios) {
+			footerSection.clipToBounds = false;
+		}
+
+		let index = 0;
+		this.indicators = [];
+		while (index < pageCount) {
+			this.indicators.push({ active: false });
+			index++;
+		}
+	}
+
 	private setupPanel(slide: ISlideMap) {
 		this.direction = direction.none;
 		this.transitioning = false;
