@@ -129,8 +129,13 @@ If the property `pageIndicators` is `true` you won't see the page indicators any
 
 #### Known issues
 
-  * Probably lots...
+  * Does not work well inside of ScrollView or TabViews.
 
+## Contributors
+
+[<img alt="TheOriginalJosh" src="https://avatars.githubusercontent.com/u/1486275?v=3&s=117" width="117">](https://github.com/TheOriginalJosh) | [<img alt="dobjek" src="https://avatars.githubusercontent.com/u/353596?v=3&s=117" width="117">](https://github.com/dobjek)| [<img alt="EddyVerbruggen" src="https://avatars.githubusercontent.com/u/1426370?v=3&s=117" width="117">](https://github.com/EddyVerbruggen)| [<img alt="Marco Mantovani" src="https://avatars.githubusercontent.com/u/1965169?v=3&s=117" width="117">](https://github.com/codeback)
+:---: |:---: |:---: |:---: |
+[Josh Sommer](https://github.com/TheOriginalJosh) |[dobjek](https://github.com/dobjek) |[Eddy Verbruggen](https://github.com/EddyVerbruggen)|[Codeback Software](https://github.com/codeback)
 
 ## Contributing guidelines
 [Contributing guidelines](https://github.com/TheOriginalJosh/nativescript-swiss-army-knife/blob/master/CONTRIBUTING.md)
@@ -140,3 +145,5 @@ If the property `pageIndicators` is `true` you won't see the page indicators any
 [MIT](/LICENSE)
 
 for {N} version 2.0.0+
+
+
