@@ -18,6 +18,10 @@ export class ItemsComponent implements OnInit {
     }
 
     onChanged(index) {
-        console.log('Slides changed! Index:', index);
+        console.log('Slides changed! Current slide index:', index);
+    }
+
+    onFinished() {
+        console.log('Slides finished!');
     }
 }

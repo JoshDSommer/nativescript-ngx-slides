@@ -60,6 +60,7 @@ export class SlidesComponent implements OnInit {
 	@Input('pageIndicators') pageIndicators: boolean;
 	@Input('class') cssClass: string = '';
 	@Output() changed: EventEmitter<any> = new EventEmitter();
+	@Output() finished: EventEmitter<any> = new EventEmitter();
 
 	private transitioning: boolean;
 	private direction: direction = direction.none;
@@ -225,6 +226,10 @@ export class SlidesComponent implements OnInit {
 		}
 
 		this.changed.next(this.currentSlide.index);
+
+		if (this.currentSlide.index === this.slides.length - 1) {
+			this.finished.next(null);
+		}
 	}
 
 	private positionSlides(slide: ISlideMap) {
