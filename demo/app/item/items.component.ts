@@ -16,4 +16,8 @@ export class ItemsComponent implements OnInit {
     ngOnInit(): void {
         this.items = this.itemService.getItems();
     }
+
+    onChanged(index) {
+        console.log('Slides changed! Index:', index);
+    }
 }

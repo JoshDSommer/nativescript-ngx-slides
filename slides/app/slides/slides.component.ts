@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, OnDestroy, forwardRef, ViewChild, ContentChildren, ElementRef, QueryList, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, OnDestroy, forwardRef, ViewChild, ContentChildren, ElementRef, QueryList, Input, Output, EventEmitter } from '@angular/core';
 
 import { SlideComponent } from '../slide/slide.component';
 import * as gestures from 'ui/gestures';
@@ -36,21 +36,21 @@ enum cancellationReason {
 @Component({
 	selector: 'slides',
 	template: `
-	<AbsoluteLayout width="100%">	
+	<AbsoluteLayout width="100%">
 		<ng-content></ng-content>
 		<StackLayout *ngIf="pageIndicators" #footer style="width:100%; height:20%;">
 			<Label *ngFor="let indicator of indicators"
 				[class.slide-indicator-active]="indicator.active == true"
 				[class.slide-indicator-inactive]="indicator.active == false	"
 			></Label>
-		</StackLayout>		
+		</StackLayout>
 	</AbsoluteLayout>
-	`,	
+	`,
 	encapsulation: ViewEncapsulation.None
 })
 
 export class SlidesComponent implements OnInit {
-	
+
 	@ContentChildren(forwardRef(() => SlideComponent)) slides: QueryList<SlideComponent>;
 	@ViewChild('footer') footer: ElementRef;
 	@Input('pageWidth') pageWidth: number;
@@ -59,6 +59,7 @@ export class SlidesComponent implements OnInit {
 	@Input('loop') loop: boolean;
 	@Input('pageIndicators') pageIndicators: boolean;
 	@Input('class') cssClass: string = '';
+	@Output() changed: EventEmitter<any> = new EventEmitter();
 
 	private transitioning: boolean;
 	private direction: direction = direction.none;
@@ -96,7 +97,7 @@ export class SlidesComponent implements OnInit {
 			AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
 			slide.slideWidth = this.pageWidth;
 			slide.slideHeight = this.pageHeight;
-			
+
 		});
 
 		this.currentSlide = this.buildSlideMap(this.slides.toArray());
@@ -222,6 +223,8 @@ export class SlidesComponent implements OnInit {
 		if (this.pageIndicators) {
 			this.setActivePageIndicator(this.currentSlide.index);
 		}
+
+		this.changed.next(this.currentSlide.index);
 	}
 
 	private positionSlides(slide: ISlideMap) {
