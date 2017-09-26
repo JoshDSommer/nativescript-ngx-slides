@@ -61,6 +61,7 @@ export class SlidesComponent implements OnInit {
 	@Input('class') cssClass: string = '';
 	@Output() changed: EventEmitter<any> = new EventEmitter();
 	@Output() finished: EventEmitter<any> = new EventEmitter();
+	@Output('tap') tap: EventEmitter<gestures.GestureEventData> = new EventEmitter<gestures.GestureEventData>();
 
 	private transitioning: boolean;
 	private direction: direction = direction.none;
@@ -295,6 +296,11 @@ export class SlidesComponent implements OnInit {
 		let endingVelocity = 0;
 		let startTime, deltaTime;
 		this.transitioning = false;
+
+		this.currentSlide.slide.layout.on('tap', (args: gestures.GestureEventData): void => {
+			this.tap.next(args);
+		});
+
 		this.currentSlide.slide.layout.on('pan', (args: gestures.PanGestureEventData): void => {
 			if (args.state === gestures.GestureStateTypes.began) {
 				startTime = Date.now();
