@@ -3,7 +3,7 @@ import { NativeScriptModule } from "nativescript-angular/platform";
 
 import { AppComponent } from "./app.component";
 
-import { SlidesModule } from '@irman/nativescript-ng2-slides';
+import { SlidesModule } from 'nativescript-ngx-slides';
 
 @NgModule({
     declarations: [AppComponent],
