@@ -24,4 +24,8 @@ export class ItemsComponent implements OnInit {
     onFinished() {
         console.log('Slides finished!');
     }
+
+    onTap(args) {
+        console.log('on Tap');
+    }
 }

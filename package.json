@@ -13,7 +13,7 @@
     "demo.ios": "npm run preparedemo && cd demo && tns run ios",
     "demo.android": "npm run preparedemo && cd demo && tns run android",
     "preparedemo": "cd demo && npm install .. ",
-    "setup": "npm install && cd demo && npm install && cd .. &&  cd demo && tns plugin add .. && cd ..",
+    "setup": "npm install && cd demo && npm install && cd .. && cd demo && tns plugin add .. && cd ..",
     "livesync.ios": "cd slides  && tns livesync ios --watch",
     "livesync.android": "cd slides  && tns livesync android --watch",
     "ios": "xcproj --project platforms/ios/YourApp.xcodeproj touch; xcproj --project platforms/ios/Pods/Pods.xcodeproj touch; tns livesync ios --emulator --watch"
