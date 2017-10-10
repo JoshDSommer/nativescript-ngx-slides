@@ -6,7 +6,7 @@ demo/*.d.ts
 demo/platforms
 demo/node_modules
 !slides/app/**/*.js
-slides/*.d.ts
+!slides/*.d.ts
 slides/platforms
 slides/node_modules
 node_modules
