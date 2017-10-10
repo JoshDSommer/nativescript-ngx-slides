@@ -16,6 +16,8 @@ export class SlideComponent {
 	@ViewChild('slideLayout') slideLayout: ElementRef;
 	@Input('class') cssClass: string = '';
 	@Output('tap') tap = new EventEmitter<gestures.GestureEventData>();
+	@Output('doubleTap') doubleTap = new EventEmitter<gestures.GestureEventData>();
+	@Output('pinch') pinch = new EventEmitter<gestures.GestureEventData>();
 
 	set slideWidth(width: number) {
 		this.layout.width = width;
@@ -40,6 +42,14 @@ export class SlideComponent {
 	ngAfterViewInit(){
 		this.slideLayout.nativeElement.on('tap', (args: gestures.GestureEventData): void => {
 			this.tap.next(args);
+		});
+
+		this.slideLayout.nativeElement.on('doubleTap', (args: gestures.GestureEventData): void => {
+			this.doubleTap.next(args);
+		});
+
+		this.slideLayout.nativeElement.on('pinch', (args: gestures.GestureEventData): void => {
+			this.pinch.next(args);
 		});
 	}
 

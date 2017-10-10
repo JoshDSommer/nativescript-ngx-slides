@@ -59,6 +59,7 @@ export class SlidesComponent implements OnInit {
 	@Input('loop') loop: boolean;
 	@Input('pageIndicators') pageIndicators: boolean;
 	@Input('class') cssClass: string = '';
+	@Input() zoomEnabled = false;
 	@Output() changed: EventEmitter<any> = new EventEmitter();
 	@Output() finished: EventEmitter<any> = new EventEmitter();
 	@Output('tap') tap: EventEmitter<gestures.GestureEventData> = new EventEmitter<gestures.GestureEventData>();
@@ -70,6 +71,10 @@ export class SlidesComponent implements OnInit {
 	indicators: IIndicators[];
 	currentSlide: ISlideMap;
 	_slideMap: ISlideMap[];
+
+	currentScale = 1;
+	currentDeltaX = 0;
+	currentDeltaY = 0;
 
 	get hasNext(): boolean {
 		return !!this.currentSlide && !!this.currentSlide.right;
@@ -106,7 +111,7 @@ export class SlidesComponent implements OnInit {
 
 		if (this.currentSlide) {
 			this.positionSlides(this.currentSlide);
-			this.applySwipe(this.pageWidth);
+			this.applyGestures();
 		}
 
 		if (this.pageIndicators) {
@@ -219,7 +224,7 @@ export class SlidesComponent implements OnInit {
 		this.positionSlides(this.currentSlide);
 
 		//if (this.disablePan === false) {
-		this.applySwipe(this.pageWidth);
+		this.applyGestures();
 		//}
 
 		if (this.pageIndicators) {
@@ -291,132 +296,224 @@ export class SlidesComponent implements OnInit {
 
 	}
 
-	public applySwipe(pageWidth: number): void {
+	public applyGestures(): void {
+
+		this.currentSlide.slide.layout.on('tap',
+			(args: gestures.GestureEventData): void => this.tap.next(args));
+
+		this.currentSlide.slide.layout.on('doubleTap', (args: gestures.GestureEventData): void => {
+
+			if (this.zoomEnabled) {
+				this.onDoubleTap(args)
+			}
+
+		});
+
+		this.currentSlide.slide.layout.on('pinch', (args: gestures.PinchGestureEventData): void => {
+
+			if (this.zoomEnabled) {
+				this.onPinch(args)
+			}
+
+		});
+
+		this.currentSlide.slide.layout.on('pan', (args: gestures.PanGestureEventData): void => {
+
+			if (this.zoomEnabled && this.currentScale !== 1) {
+				this.onPan(args);
+			} else {
+				this.onSwipe(args);
+			}
+
+		});
+	}
+
+	public onSwipe(args: gestures.PanGestureEventData) {
+
 		let previousDelta = -1; //hack to get around ios firing pan event after release
 		let endingVelocity = 0;
 		let startTime, deltaTime;
 		this.transitioning = false;
 
-		this.currentSlide.slide.layout.on('tap', (args: gestures.GestureEventData): void => {
-			this.tap.next(args);
-		});
+		if (args.state === gestures.GestureStateTypes.began) {
+			startTime = Date.now();
+			previousDelta = 0;
+			endingVelocity = 250;
 
-		this.currentSlide.slide.layout.on('pan', (args: gestures.PanGestureEventData): void => {
-			if (args.state === gestures.GestureStateTypes.began) {
-				startTime = Date.now();
-				previousDelta = 0;
-				endingVelocity = 250;
+			//this.triggerStartEvent();
+		} else if (args.state === gestures.GestureStateTypes.ended) {
+			deltaTime = Date.now() - startTime;
+			// if velocityScrolling is enabled then calculate the velocitty
 
-				//this.triggerStartEvent();
-			} else if (args.state === gestures.GestureStateTypes.ended) {
-				deltaTime = Date.now() - startTime;
-				// if velocityScrolling is enabled then calculate the velocitty
-
-				// swiping left to right.
-				if (args.deltaX > (pageWidth / 3)) {
-					if (this.hasPrevious) {
-						this.transitioning = true;
-						this.showLeftSlide(this.currentSlide, args.deltaX, endingVelocity).then(() => {
-							this.setupPanel(this.currentSlide.left);
-
-							//this.triggerChangeEventLeftToRight();
-						});
-					} else {
-						//We're at the start
-						//Notify no more slides
-						//this.triggerCancelEvent(cancellationReason.noPrevSlides);
-					}
-					return;
-				}
-				// swiping right to left
-				else if (args.deltaX < (-pageWidth / 3)) {
-					if (this.hasNext) {
-						this.transitioning = true;
-						this.showRightSlide(this.currentSlide, args.deltaX, endingVelocity).then(() => {
-							this.setupPanel(this.currentSlide.right);
-
-							// Notify changed
-							//this.triggerChangeEventRightToLeft();
-
-							if (!this.hasNext) {
-								// Notify finsihed
-								// this.notify({
-								// 	eventName: SlideContainer.FINISHED_EVENT,
-								// 	object: this
-								// });
-							}
-						});
-					} else {
-						// We're at the end
-						// Notify no more slides
-						//this.triggerCancelEvent(cancellationReason.noMoreSlides);
-					}
-					return;
-				}
-
-				if (this.transitioning === false) {
-					//Notify cancelled
-					//this.triggerCancelEvent(cancellationReason.user);
+			// swiping left to right.
+			if (args.deltaX > (this.pageWidth / 3)) {
+				if (this.hasPrevious) {
 					this.transitioning = true;
-					this.currentSlide.slide.layout.animate({
-						translate: { x: -this.pageWidth, y: 0 },
+					this.showLeftSlide(this.currentSlide, args.deltaX, endingVelocity).then(() => {
+						this.setupPanel(this.currentSlide.left);
+
+						//this.triggerChangeEventLeftToRight();
+					});
+				} else {
+					//We're at the start
+					//Notify no more slides
+					//this.triggerCancelEvent(cancellationReason.noPrevSlides);
+				}
+				return;
+			}
+			// swiping right to left
+			else if (args.deltaX < (-this.pageWidth / 3)) {
+				if (this.hasNext) {
+					this.transitioning = true;
+					this.showRightSlide(this.currentSlide, args.deltaX, endingVelocity).then(() => {
+						this.setupPanel(this.currentSlide.right);
+
+						// Notify changed
+						//this.triggerChangeEventRightToLeft();
+
+						if (!this.hasNext) {
+							// Notify finsihed
+							// this.notify({
+							// 	eventName: SlideContainer.FINISHED_EVENT,
+							// 	object: this
+							// });
+						}
+					});
+				} else {
+					// We're at the end
+					// Notify no more slides
+					//this.triggerCancelEvent(cancellationReason.noMoreSlides);
+				}
+				return;
+			}
+
+			if (this.transitioning === false) {
+				//Notify cancelled
+				//this.triggerCancelEvent(cancellationReason.user);
+				this.transitioning = true;
+				this.currentSlide.slide.layout.animate({
+					translate: { x: -this.pageWidth, y: 0 },
+					duration: 200,
+					curve: AnimationCurve.easeOut
+				});
+				if (this.hasNext) {
+					this.currentSlide.right.slide.layout.animate({
+						translate: { x: 0, y: 0 },
 						duration: 200,
 						curve: AnimationCurve.easeOut
 					});
-					if (this.hasNext) {
-						this.currentSlide.right.slide.layout.animate({
-							translate: { x: 0, y: 0 },
-							duration: 200,
-							curve: AnimationCurve.easeOut
-						});
-						if (app.ios) //for some reason i have to set these in ios or there is some sort of bounce back.
-							this.currentSlide.right.slide.layout.translateX = 0;
-					}
-					if (this.hasPrevious) {
-						this.currentSlide.left.slide.layout.animate({
-							translate: { x: -this.pageWidth * 2, y: 0 },
-							duration: 200,
-							curve: AnimationCurve.easeOut
-						});
-						if (app.ios)
-							this.currentSlide.left.slide.layout.translateX = -this.pageWidth;
-
-					}
+					if (app.ios) //for some reason i have to set these in ios or there is some sort of bounce back.
+						this.currentSlide.right.slide.layout.translateX = 0;
+				}
+				if (this.hasPrevious) {
+					this.currentSlide.left.slide.layout.animate({
+						translate: { x: -this.pageWidth * 2, y: 0 },
+						duration: 200,
+						curve: AnimationCurve.easeOut
+					});
 					if (app.ios)
-						this.currentSlide.slide.layout.translateX = -this.pageWidth;
+						this.currentSlide.left.slide.layout.translateX = -this.pageWidth;
 
-					this.transitioning = false;
 				}
-			} else {
-				if (!this.transitioning
-					&& previousDelta !== args.deltaX
-					&& args.deltaX != null
-					&& args.deltaX < 0) {
+				if (app.ios)
+					this.currentSlide.slide.layout.translateX = -this.pageWidth;
 
-					if (this.hasNext) {
-						this.direction = direction.left;
-						this.currentSlide.slide.layout.translateX = args.deltaX - this.pageWidth;
-						this.currentSlide.right.slide.layout.translateX = args.deltaX;
-
-					}
-				} else if (!this.transitioning
-					&& previousDelta !== args.deltaX
-					&& args.deltaX != null
-					&& args.deltaX > 0) {
-
-					if (this.hasPrevious) {
-						this.direction = direction.right;
-						this.currentSlide.slide.layout.translateX = args.deltaX - this.pageWidth;
-						this.currentSlide.left.slide.layout.translateX = -(this.pageWidth * 2) + args.deltaX;
-					}
-				}
-
-				if (args.deltaX !== 0) {
-					previousDelta = args.deltaX;
-				}
-
+				this.transitioning = false;
 			}
-		});
+		} else {
+			if (!this.transitioning
+				&& previousDelta !== args.deltaX
+				&& args.deltaX != null
+				&& args.deltaX < 0) {
+
+				if (this.hasNext) {
+					this.direction = direction.left;
+					this.currentSlide.slide.layout.translateX = args.deltaX - this.pageWidth;
+					this.currentSlide.right.slide.layout.translateX = args.deltaX;
+
+				}
+			} else if (!this.transitioning
+				&& previousDelta !== args.deltaX
+				&& args.deltaX != null
+				&& args.deltaX > 0) {
+
+				if (this.hasPrevious) {
+					this.direction = direction.right;
+					this.currentSlide.slide.layout.translateX = args.deltaX - this.pageWidth;
+					this.currentSlide.left.slide.layout.translateX = -(this.pageWidth * 2) + args.deltaX;
+				}
+			}
+
+			if (args.deltaX !== 0) {
+				previousDelta = args.deltaX;
+			}
+
+		}
+
+	}
+
+	public onDoubleTap(args: gestures.GestureEventData) {
+
+		args.view.animate({
+			// translate: { x: 0, y: 0 },
+			scale: { x: 1, y: 1 },
+			curve: 'easeOut',
+			duration: 300
+		})
+
+		this.currentScale = 1;
+
+	}
+
+	public onPinch(args: gestures.PinchGestureEventData) {
+
+		let item = args.view;
+
+		if (args.state === gestures.GestureStateTypes.began) {
+			const newOriginX = args.getFocusX() - item.translateX;
+			const newOriginY = args.getFocusY() - item.translateY;
+
+			const oldOriginX = item.originX * item.getMeasuredWidth();
+			const oldOriginY = item.originY * item.getMeasuredHeight();
+
+			item.translateX += (oldOriginX - newOriginX) * (1 - item.scaleX);
+			item.translateY += (oldOriginY - newOriginY) * (1 - item.scaleY);
+
+			item.originX = newOriginX / item.getMeasuredWidth();
+			item.originY = newOriginY / item.getMeasuredHeight();
+
+			this.currentScale = item.scaleX;
+
+		} else if (args.scale && args.scale !== 1) {
+			let newScale = this.currentScale * args.scale;
+			newScale = Math.min(8, newScale);
+			newScale = Math.max(1, newScale);
+
+			item.scaleX = newScale;
+			item.scaleY = newScale;
+
+			this.currentScale = newScale;
+
+		}
+
+	}
+
+	public onPan(args: gestures.PanGestureEventData) {
+
+		let item = args.view;
+
+		if (args.state === 1) {
+			this.currentDeltaX = 0;
+			this.currentDeltaY = 0;
+		}
+		else if (args.state === 2) {
+			item.translateX += args.deltaX - this.currentDeltaX;
+			item.translateY += args.deltaY - this.currentDeltaY;
+
+			this.currentDeltaX = args.deltaX;
+			this.currentDeltaY = args.deltaY;
+		}
+
 	}
 
 	private buildSlideMap(slides: SlideComponent[]) {
