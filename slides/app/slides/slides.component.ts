@@ -455,7 +455,7 @@ export class SlidesComponent implements OnInit {
 	public onDoubleTap(args: gestures.GestureEventData) {
 
 		args.view.animate({
-			// translate: { x: 0, y: 0 },
+			translate: { x: -this.pageWidth, y: 0 },
 			scale: { x: 1, y: 1 },
 			curve: 'easeOut',
 			duration: 300
