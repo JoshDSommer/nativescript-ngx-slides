@@ -57,6 +57,7 @@ export class SlidesComponent implements OnInit {
 	@Input('pageHeight') pageHeight: number;
 	@Input('footerMarginTop') footerMarginTop: number;
 	@Input('loop') loop: boolean;
+	@Input('panSensitivity') panSensitivity: number;
 	@Input('pageIndicators') pageIndicators: boolean;
 	@Input('class') cssClass: string = '';
 	@Input() zoomEnabled = false;
@@ -91,6 +92,7 @@ export class SlidesComponent implements OnInit {
 
 		this.loop = this.loop ? this.loop : false;
 		this.pageIndicators = this.pageIndicators ? this.pageIndicators : false;
+		this.panSensitivity = this.panSensitivity && this.panSensitivity > 2 ? this.panSensitivity : 3;
 		this.pageWidth = this.pageWidth ? this.pageWidth : platform.screen.mainScreen.widthDIPs;
 		this.pageHeight = this.pageHeight ? this.pageHeight : platform.screen.mainScreen.heightDIPs;
 		this.footerMarginTop = this.footerMarginTop ? this.footerMarginTop : this.calculateFoorterMarginTop(this.pageHeight);
@@ -346,7 +348,7 @@ export class SlidesComponent implements OnInit {
 			// if velocityScrolling is enabled then calculate the velocitty
 
 			// swiping left to right.
-			if (args.deltaX > (this.pageWidth / 3)) {
+			if (args.deltaX > (this.pageWidth / this.panSensitivity)) {
 				if (this.hasPrevious) {
 					this.transitioning = true;
 					this.showLeftSlide(this.currentSlide, args.deltaX, endingVelocity).then(() => {
@@ -362,7 +364,7 @@ export class SlidesComponent implements OnInit {
 				return;
 			}
 			// swiping right to left
-			else if (args.deltaX < (-this.pageWidth / 3)) {
+			else if (args.deltaX < (-this.pageWidth / this.panSensitivity)) {
 				if (this.hasNext) {
 					this.transitioning = true;
 					this.showRightSlide(this.currentSlide, args.deltaX, endingVelocity).then(() => {
