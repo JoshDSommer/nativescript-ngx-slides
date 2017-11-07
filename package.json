@@ -9,7 +9,6 @@
     }
   },
   "scripts": {
-    "prepublish": "cd slides && tsc",
     "demo.ios": "npm run preparedemo && cd demo && tns run ios",
     "demo.android": "npm run preparedemo && cd demo && tns run android",
     "preparedemo": "cd demo && npm install .. ",
@@ -18,7 +17,9 @@
     "livesync.android": "cd slides  && tns livesync android --watch",
     "ios": "xcproj --project platforms/ios/YourApp.xcodeproj touch; xcproj --project platforms/ios/Pods/Pods.xcodeproj touch; tns livesync ios --emulator --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "tns-core-modules": "^3.3.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/TheOriginalJosh/nativescript-ngx-slides"
