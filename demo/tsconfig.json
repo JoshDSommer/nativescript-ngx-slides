@@ -7,8 +7,9 @@
         "noEmitHelpers": true,
         "noEmitOnError": true,
         "lib": [
-            "es6",
+            "es2017",
             "dom",
+            "es6",
             "es2015.iterable"
         ],
         "baseUrl": ".",

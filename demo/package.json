@@ -13,21 +13,21 @@
     }
   },
   "dependencies": {
-    "@angular/animations": "~4.1.0",
-    "@angular/common": "~4.1.0",
-    "@angular/compiler": "~4.1.0",
-    "@angular/core": "~4.1.0",
-    "@angular/forms": "~4.1.0",
-    "@angular/http": "~4.1.0",
-    "@angular/platform-browser": "~4.1.0",
-    "@angular/router": "~4.1.0",
+    "@angular/animations": "~4.4.4",
+    "@angular/common": "~4.4.4",
+    "@angular/compiler": "~4.4.4",
+    "@angular/core": "~4.4.4",
+    "@angular/forms": "~4.4.4",
+    "@angular/http": "~4.4.4",
+    "@angular/platform-browser": "~4.4.4",
+    "@angular/router": "~4.4.4",
     "nativescript-angular": "~4.4.1",
-    "nativescript-ngx-slides": "file:..",
+    "nativescript-ngx-slides": "file:../nativescript-ngx-slides-1.0.0.tgz",
     "nativescript-theme-core": "~1.0.2",
     "reflect-metadata": "~0.1.8",
-    "rxjs": "~5.3.0",
-    "tns-core-modules": "~3.0.0",
-    "zone.js": "~0.8.2"
+    "rxjs": "~5.4.2",
+    "tns-core-modules": "~3.3.0",
+    "zone.js": "~0.8.17"
   },
   "devDependencies": {
     "babel-traverse": "6.24.1",
@@ -35,6 +35,6 @@
     "babylon": "6.17.1",
     "lazy": "1.0.11",
     "nativescript-dev-typescript": "~0.5.0",
-    "typescript": "~2.2.1"
+    "typescript": "~2.5.2"
   }
 }
