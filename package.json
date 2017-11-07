@@ -1,24 +1,35 @@
 {
   "name": "nativescript-ngx-slides",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "description": "NativeScript + Angular version of the slides",
   "main": "index",
   "nativescript": {
     "tns-ios": {
-      "version": "2.4.0"
+      "version": "3.0.0"
     }
   },
   "scripts": {
-    "prepublish": "cd slides && tsc",
-    "demo.ios": "npm run preparedemo && cd demo && tns run ios",
-    "demo.android": "npm run preparedemo && cd demo && tns run android",
+    "demo.ios": "npm run preparedemo && cd demo && tns run ios --emulator",
+    "demo.android": "npm run preparedemo && cd demo && tns run android --emulator",
     "preparedemo": "cd demo && npm install .. ",
     "setup": "npm install && cd demo && npm install && cd .. && cd demo && tns plugin add .. && cd ..",
-    "livesync.ios": "cd slides  && tns livesync ios --watch",
-    "livesync.android": "cd slides  && tns livesync android --watch",
+    "livesync.ios": "cd slides  && tns run ios --emulator --syncAllFiles",
+    "livesync.android": "cd slides  && tns run android --emulator --syncAllFiles",
     "ios": "xcproj --project platforms/ios/YourApp.xcodeproj touch; xcproj --project platforms/ios/Pods/Pods.xcodeproj touch; tns livesync ios --emulator --watch"
   },
-  "dependencies": {},
+  "devDependencies": {
+    "@angular/animations": "~4.4.4",
+    "@angular/common": "~4.4.4",
+    "@angular/compiler": "~4.4.4",
+    "@angular/core": "~4.4.4",
+    "@angular/forms": "~4.4.4",
+    "@angular/http": "~4.4.4",
+    "@angular/platform-browser": "~4.4.4",
+    "@angular/router": "~4.4.4",
+    "rxjs": "~5.4.2",
+    "tns-core-modules": "^3.3.0",
+    "zone.js": "~0.8.17"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/TheOriginalJosh/nativescript-ngx-slides"

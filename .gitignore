@@ -1,8 +1,10 @@
 *.js
 *.js.map
 *.log
+demo/package-lock.json
 demo/app/*.js
 demo/*.d.ts
+demo/hooks
 demo/platforms
 demo/node_modules
 slides/app/**/*.js
@@ -10,3 +12,5 @@ slides/*.d.ts
 slides/platforms
 slides/node_modules
 node_modules
+package-lock.json
+*.tgz

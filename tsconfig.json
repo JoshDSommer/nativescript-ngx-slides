@@ -1,16 +1,23 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "target": "es5",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "noEmitHelpers": false,
-		"noEmitOnError": false,
-		"noEmit": false,
-        "allowUnreachableCode": true,
-        "skipLibCheck": true
+      "module": "commonjs",
+      "target": "es5",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "noEmitHelpers": true,
+      "noEmitOnError": false,
+      "noEmit": false,
+      "allowUnreachableCode": true,
+      "baseUrl": ".",
+      "paths": {
+        "*": [
+          "./node_modules/tns-core-modules/*",
+          "./node_modules/*"
+        ]
+      },
+      "skipLibCheck": true
     },
     "files": [
-        "index.ts"
+      "index.ts"
     ]
-}
+  }
