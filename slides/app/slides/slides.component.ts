@@ -69,13 +69,13 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 	/** If auto init is turned off this flag indicates when the slides are ready to be rendered */
 	private manualInitTriggered: boolean = false;
 
-    /** Flag indicating whether the user is currently panning the current slide around (= true). Don't start any animation while panning is true. */
-    private panning: boolean;
+	/** Flag indicating whether the user is currently panning the current slide around (= true). Don't start any animation while panning is true. */
+	private panning: boolean;
 
-    /** Flag indicating whether an animation is about to start or playing */
-    private transitioning: boolean;
+	/** Flag indicating whether an animation is about to start or playing */
+	private transitioning: boolean;
 
-    /** Direction of the animation */
+	/** Direction of the animation */
 	private direction: direction = direction.none;
 	private FOOTER_HEIGHT: number = 50;
 
@@ -201,7 +201,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	setActivePageIndicator(activeIndex: number) {
 		this.indicators.map((indicator: IIndicators, index: number) => {
-            indicator.active = index === activeIndex;
+			indicator.active = index === activeIndex;
 		});
 
 		this.indicators = [...this.indicators];
@@ -360,7 +360,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.transitioning = false;
 
 		if (args.state === gestures.GestureStateTypes.began) {
-            this.panning = true;
+			this.panning = true;
 			startTime = Date.now();
 			previousDelta = 0;
 			endingVelocity = 250;
@@ -581,9 +581,9 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	public nextSlide(duration?: number): Promise<any> {
-        if (this.panning || this.transitioning) {
-            return; // don't start a new animation while slides are on the move
-        }
+		if (this.panning || this.transitioning) {
+			return; // don't start a new animation while slides are on the move
+		}
 
 		if (!this.hasNext) {
 			//this.triggerCancelEvent(cancellationReason.noMoreSlides);
@@ -601,9 +601,9 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 	public previousSlide(duration?: number): Promise<any> {
-        if (this.panning || this.transitioning) {
-            return; // don't start a new animation while slides are on the move
-        }
+		if (this.panning || this.transitioning) {
+			return; // don't start a new animation while slides are on the move
+		}
 
 		if (!this.hasPrevious) {
 			//this.triggerCancelEvent(cancellationReason.noPrevSlides);
