@@ -57,6 +57,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input('pageHeight') pageHeight: number;
 	@Input('footerMarginTop') footerMarginTop: number;
 	@Input('loop') loop: boolean;
+	@Input('disablePan') disablePan: boolean = false;
 	@Input('pageIndicators') pageIndicators: boolean;
 	@Input('class') cssClass: string = '';
 	@Input() zoomEnabled = false;
@@ -67,7 +68,14 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	/** If auto init is turned off this flag indicates when the slides are ready to be rendered */
 	private manualInitTriggered: boolean = false;
-	private transitioning: boolean;
+
+    /** Flag indicating whether the user is currently panning the current slide around (= true). Don't start any animation while panning is true. */
+    private panning: boolean;
+
+    /** Flag indicating whether an animation is about to start or playing */
+    private transitioning: boolean;
+
+    /** Direction of the animation */
 	private direction: direction = direction.none;
 	private FOOTER_HEIGHT: number = 50;
 
@@ -193,11 +201,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	setActivePageIndicator(activeIndex: number) {
 		this.indicators.map((indicator: IIndicators, index: number) => {
-			if (index === activeIndex) {
-				indicator.active = true;
-			} else {
-				indicator.active = false;
-			}
+            indicator.active = index === activeIndex;
 		});
 
 		this.indicators = [...this.indicators];
@@ -244,9 +248,9 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 		// sets up each slide so that they are positioned to transition either way.
 		this.positionSlides(this.currentSlide);
 
-		//if (this.disablePan === false) {
-		this.applyGestures();
-		//}
+		if (this.disablePan === false) {
+			this.applyGestures();
+		}
 
 		if (this.pageIndicators) {
 			this.setActivePageIndicator(this.currentSlide.index);
@@ -350,21 +354,26 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	public onSwipe(args: gestures.PanGestureEventData) {
-
 		let previousDelta = -1; //hack to get around ios firing pan event after release
 		let endingVelocity = 0;
 		let startTime, deltaTime;
 		this.transitioning = false;
 
 		if (args.state === gestures.GestureStateTypes.began) {
+            this.panning = true;
 			startTime = Date.now();
 			previousDelta = 0;
 			endingVelocity = 250;
 
 			//this.triggerStartEvent();
 		} else if (args.state === gestures.GestureStateTypes.ended) {
+			if (this.transitioning) {
+				return; // Don't allow panning while an animation is active
+			}
+
+			this.panning = false;
 			deltaTime = Date.now() - startTime;
-			// if velocityScrolling is enabled then calculate the velocitty
+			// if velocityScrolling is enabled then calculate the velocity
 
 			// swiping left to right.
 			if (args.deltaX > (this.pageWidth / 3)) {
@@ -393,7 +402,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 						//this.triggerChangeEventRightToLeft();
 
 						if (!this.hasNext) {
-							// Notify finsihed
+							// Notify finished
 							// this.notify({
 							// 	eventName: SlideContainer.FINISHED_EVENT,
 							// 	object: this
@@ -562,7 +571,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 	public GoToSlide(num: number, traverseDuration: number = 50, landingDuration: number = 200): void {
 		if (this.currentSlide.index == num) return;
 
-		var duration: number = landingDuration;
+		let duration: number = landingDuration;
 		if (Math.abs(num - this.currentSlide.index) != 1) duration = traverseDuration;
 
 		if (this.currentSlide.index < num)
@@ -572,6 +581,10 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	public nextSlide(duration?: number): Promise<any> {
+        if (this.panning || this.transitioning) {
+            return; // don't start a new animation while slides are on the move
+        }
+
 		if (!this.hasNext) {
 			//this.triggerCancelEvent(cancellationReason.noMoreSlides);
 			return;
@@ -588,6 +601,10 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 	public previousSlide(duration?: number): Promise<any> {
+        if (this.panning || this.transitioning) {
+            return; // don't start a new animation while slides are on the move
+        }
+
 		if (!this.hasPrevious) {
 			//this.triggerCancelEvent(cancellationReason.noPrevSlides);
 			return;
