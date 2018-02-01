@@ -5,12 +5,13 @@
 	"files.exclude": {
 		"**/.git": true,
 		"**/.DS_Store": true,
-		"**/dist/": true,
+		"**/dist/": false,
 		"**/debug/": true,
 		"**/release/": true,
 		"**/tests/": true,
 		"**/*.js": true,
 		"**/*.js.map": true,
-		"**/*.d.ts": true
+		"**/*.d.ts": true,
+		"**/*.metadata.json": true
 	}
 }
