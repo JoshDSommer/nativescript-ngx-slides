@@ -10,8 +10,8 @@
   },
   "scripts": {
     "prepare.dist": "./node_modules/.bin/ngc --p tsconfig.json",
-    "demo.ios": "npm run prepare.dist && cd demo && npm install ../dist && tns run ios",
-    "demo.android": "npm run prepare.dist && cd demo && npm install ../dist && tns run android",
+    "demo.ios": "npm run prepare.dist && cd demo && tns plugin add ../dist && tns run ios",
+    "demo.android": "npm run prepare.dist && cd demo && tns plugin add ../dist && tns run android",
     "preparedemo": "cd demo && npm install .. ",
     "setup": "npm install && cd demo && npm install && cd .. && cd demo && tns plugin add .. && cd ..",
     "livesync.ios": "cd slides  && tns livesync ios --watch",
