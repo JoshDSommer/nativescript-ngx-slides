@@ -28,7 +28,7 @@
 		"skipTemplateCodegen": true
 	},
 	"include": [
-		"./slides/app/"
+		"./slides/app/slidesModule"
 	],
 	"exclude": [
 		"**/**.spec.ts",
