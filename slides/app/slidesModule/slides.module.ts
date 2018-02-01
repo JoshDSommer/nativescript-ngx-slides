@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { SlidesComponent } from './slides/slides.component';
 import { SlideComponent } from './slide/slide.component';
 
+export { SlidesComponent } from './slides/slides.component';
+export { SlideComponent } from './slide/slide.component';
+
 @NgModule({
     imports: [CommonModule],
     exports: [SlideComponent, SlidesComponent],

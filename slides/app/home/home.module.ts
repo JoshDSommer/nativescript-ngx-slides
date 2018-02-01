@@ -3,11 +3,13 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 
 import { HomeRoutingModule } from "./home-routing.module";
 import { HomeComponent } from "./home.component";
+import { SlidesModule } from "../slidesModule/slides.module";
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
-        HomeRoutingModule
+        HomeRoutingModule,
+        SlidesModule
     ],
     declarations: [
         HomeComponent

@@ -85,9 +85,12 @@ export class SlidesComponent implements OnInit {
 
 	constructor(private ref: ChangeDetectorRef) {
 		this.indicators = [];
+		console.log('slides ?????? ');
+
 	}
 
 	ngOnInit() {
+		console.log('slides ?????? ');
 
 		this.loop = this.loop ? this.loop : false;
 		this.pageIndicators = this.pageIndicators ? this.pageIndicators : false;
@@ -99,8 +102,11 @@ export class SlidesComponent implements OnInit {
 	}
 
 	ngAfterViewInit() {
+		console.log('slides ?????? ');
+
 		// loop through slides and setup height and widith
 		this.slides.forEach((slide: SlideComponent) => {
+			console.log('slide ');
 			AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
 			slide.slideWidth = this.pageWidth;
 			slide.slideHeight = this.pageHeight;

@@ -1,1 +1,1 @@
-export { SlidesModule } from './slides/app/slides.module';
+export { SlidesModule, SlideComponent, SlidesComponent } from './slides/app/slidesModule/slides.module';
