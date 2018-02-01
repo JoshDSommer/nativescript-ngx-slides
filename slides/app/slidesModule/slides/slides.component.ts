@@ -101,6 +101,9 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	ngAfterViewInit() {
+		if (!this.manualInitTriggered) {
+			this._init();
+		}
 		this.slides.changes.subscribe(() => {
 			this._init();
 		});
