@@ -3,6 +3,7 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import { SlidesModule } from "nativescript-ngx-slides";
 
 @NgModule({
     bootstrap: [
@@ -11,6 +12,7 @@ import { AppComponent } from "./app.component";
     imports: [
         NativeScriptModule,
         AppRoutingModule,
+        SlidesModule
     ],
     declarations: [
         AppComponent
