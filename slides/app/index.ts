@@ -1,0 +1,1 @@
+export { SlidesModule, SlideComponent, SlidesComponent } from './slidesModule/slides.module';
