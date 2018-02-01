@@ -6,6 +6,5 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
     constructor() {
-        console.log("console.log working");
     }
  }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { StackLayout } from 'ui/layouts/stack-layout';
 import * as gestures from 'ui/gestures';
 
@@ -10,6 +10,7 @@ import * as gestures from 'ui/gestures';
 		<ng-content></ng-content>
 	</StackLayout>
 	`,
+	encapsulation: ViewEncapsulation.None
 })
 
 export class SlideComponent {
