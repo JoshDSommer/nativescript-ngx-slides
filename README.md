@@ -54,6 +54,9 @@ export class AppModule { }
 
 ```
 ### CSS
+
+place this in the app.css file in the root of your project. 
+
 ```css
 .slide-1{
   background-color: darkslateblue;
