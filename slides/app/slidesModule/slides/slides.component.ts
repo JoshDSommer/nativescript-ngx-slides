@@ -49,7 +49,7 @@ enum cancellationReason {
 	encapsulation: ViewEncapsulation.None
 })
 
-export class SlidesComponent implements OnInit {
+export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	@ContentChildren(forwardRef(() => SlideComponent)) slides: QueryList<SlideComponent>;
 	@ViewChild('footer') footer: ElementRef;
@@ -60,10 +60,13 @@ export class SlidesComponent implements OnInit {
 	@Input('pageIndicators') pageIndicators: boolean;
 	@Input('class') cssClass: string = '';
 	@Input() zoomEnabled = false;
+	@Input('autoInit') autoInit: boolean = true;
 	@Output() changed: EventEmitter<any> = new EventEmitter();
 	@Output() finished: EventEmitter<any> = new EventEmitter();
 	@Output('tap') tap: EventEmitter<gestures.GestureEventData> = new EventEmitter<gestures.GestureEventData>();
 
+	/** If auto init is turned off this flag indicates when the slides are ready to be rendered */
+	private manualInitTriggered: boolean = false;
 	private transitioning: boolean;
 	private direction: direction = direction.none;
 	private FOOTER_HEIGHT: number = 50;
@@ -98,12 +101,30 @@ export class SlidesComponent implements OnInit {
 	}
 
 	ngAfterViewInit() {
-		// loop through slides and setup height and widith
+		this.slides.changes.subscribe(() => {
+			this._init();
+		});
+	}
+
+	public init() {
+		this.manualInitTriggered = true;
+	}
+
+	/**
+	 * This method cannot be called directly from a using component but has to be called within ngAfterViewChecked().
+	 *
+	 * @private
+	 */
+	private _init() {
+		if (this.slides === undefined || this.slides === null || this.slides.length == 0 || (!this.manualInitTriggered && !this.autoInit)) {
+			return;
+		}
+
+		// loop through slides and setup height and width
 		this.slides.forEach((slide: SlideComponent) => {
 			AbsoluteLayout.setLeft(slide.layout, this.pageWidth);
 			slide.slideWidth = this.pageWidth;
 			slide.slideHeight = this.pageHeight;
-
 		});
 
 		this.currentSlide = this.buildSlideMap(this.slides.toArray());
