@@ -1,6 +1,6 @@
 {
   "name": "nativescript-ngx-slides",
-  "version": "0.4.1",
+  "version": "0.4.4",
   "description": "NativeScript + Angular version of the slides",
   "main": "index",
   "nativescript": {
@@ -9,16 +9,21 @@
     }
   },
   "scripts": {
-    "prepublish": "cd slides && tsc",
-    "demo.ios": "npm run preparedemo && cd demo && tns run ios",
-    "demo.android": "npm run preparedemo && cd demo && tns run android",
+    "prepare.dist": "./node_modules/.bin/ngc --p tsconfig.json",
+    "demo.ios": "npm run prepare.dist && cd demo && npm install ../dist && tns run ios",
+    "demo.android": "npm run prepare.dist && cd demo && npm install ../dist && tns run android",
     "preparedemo": "cd demo && npm install .. ",
     "setup": "npm install && cd demo && npm install && cd .. && cd demo && tns plugin add .. && cd ..",
     "livesync.ios": "cd slides  && tns livesync ios --watch",
     "livesync.android": "cd slides  && tns livesync android --watch",
     "ios": "xcproj --project platforms/ios/YourApp.xcodeproj touch; xcproj --project platforms/ios/Pods/Pods.xcodeproj touch; tns livesync ios --emulator --watch"
   },
-  "dependencies": {},
+  "devDependencies": {
+    "@angular/compiler": "^5.0.0",
+    "@angular/compiler-cli": "^5.0.0",
+    "typescript": "2.4.2"
+
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/TheOriginalJosh/nativescript-ngx-slides"

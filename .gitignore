@@ -10,3 +10,10 @@ slides/*.d.ts
 slides/platforms
 slides/node_modules
 node_modules
+
+// ignore dist
+dist/*
+!dist/package.json
+!dist/.npmrc
+!dist/.npmignore
+!gulp-inline-script.js
