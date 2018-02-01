@@ -13,8 +13,8 @@
     "demo.ios": "npm run prepare.dist && cd demo && tns plugin add ../dist && tns run ios",
     "demo.android": "npm run prepare.dist && cd demo && tns plugin add ../dist && tns run android",
     "setup": "npm install && cd demo && npm install && cd .. && cd demo && tns plugin add .. && cd ..",
-    "livesync.ios": "cd slides  && tns livesync ios --watch",
-    "livesync.android": "cd slides  && tns livesync android --watch",
+    "dev.ios": "cd slides  && tns run ios",
+    "dev.android": "cd slides  && tns run android",
     "ios": "xcproj --project platforms/ios/YourApp.xcodeproj touch; xcproj --project platforms/ios/Pods/Pods.xcodeproj touch; tns livesync ios --emulator --watch"
   },
   "devDependencies": {
