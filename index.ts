@@ -1,1 +1,0 @@
-export { SlidesModule } from './slides/app/slides.module';
