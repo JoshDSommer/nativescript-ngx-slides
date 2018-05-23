@@ -17,3 +17,7 @@ dist/*
 !dist/.npmrc
 !dist/.npmignore
 !gulp-inline-script.js
+
+*.tgz
+*.metadata.json
+*.d.ts
