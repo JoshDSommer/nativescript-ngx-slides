@@ -7,6 +7,9 @@
     "id": "org.nativescript.slides",
     "tns-android": {
       "version": "3.4.1"
+    },
+    "tns-ios": {
+      "version": "4.0.1"
     }
   },
   "dependencies": {
@@ -20,7 +23,7 @@
     "@angular/platform-browser-dynamic": "~5.2.0",
     "@angular/router": "~5.2.0",
     "nativescript-angular": "~5.2.0",
-    "nativescript-ngx-slides": "file:///C:\\Code\\nativescript-ngx-slides\\dist",
+    "nativescript-ngx-slides": "file:../src",
     "nativescript-theme-core": "~1.0.4",
     "reflect-metadata": "~0.1.10",
     "rxjs": "~5.5.5",

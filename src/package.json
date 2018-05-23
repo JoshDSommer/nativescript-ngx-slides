@@ -1,0 +1,34 @@
+{
+  "name": "nativescript-ngx-slides",
+  "version": "0.4.4",
+  "description": "NativeScript + Angular version of the slides",
+  "main": "index",
+  "nativescript": {
+    "tns-ios": {
+      "version": "2.4.0"
+    }
+  },
+  "scripts": {
+    "ngc": "ngc",
+    "demo.ios": "ngc && cd ../demo && tns plugin add ../src && tns run ios",
+    "demo.android": "ngc && cd ../demo && tns plugin add ../src && tns run android",
+    "setup": "npm i && cd ../demo && npm i && tns plugin add ../src",
+    "prepack": "ngc && cp ../LICENSE ./LICENSE && cp ../README.md ./README.md",
+    "postpack": "rm ./LICENSE ./README.md"
+  },
+  "devDependencies": {
+    "@angular/common": "^5.0.0",
+    "@angular/compiler": "^5.0.0",
+    "@angular/core": "^5.0.0",
+    "@angular/compiler-cli": "^5.0.0",
+    "rxjs": "^5.0.0",
+    "tns-core-modules": "latest",
+    "typescript": "~2.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheOriginalJosh/nativescript-ngx-slides"
+  },
+  "author": "Josh Sommer <joshdsommer@gmail.com> (https://twitter.com/_JoshSommer)",
+  "license": "MIT"
+}
