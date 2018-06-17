@@ -1,10 +1,16 @@
 {
   "name": "nativescript-ngx-slides",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "NativeScript + Angular version of the slides",
   "repository": {
     "type": "git",
     "url": "https://github.com/TheOriginalJosh/nativescript-ngx-slides"
+  },
+  "nativescript": {
+    "platforms": {
+      "android": "4.0.1",
+      "ios": "4.0.1"
+    }
   },
   "author": "Josh Sommer <joshdsommer@gmail.com> (https://twitter.com/_JoshSommer)",
   "license": "MIT",
