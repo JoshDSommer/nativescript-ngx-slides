@@ -1,0 +1,23 @@
+{
+  "name": "nativescript-ngx-slides",
+  "version": "1.0.6",
+  "description": "NativeScript + Angular version of the slides",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheOriginalJosh/nativescript-ngx-slides"
+  },
+  "author": "Josh Sommer <joshdsommer@gmail.com> (https://twitter.com/_JoshSommer)",
+  "license": "MIT",
+  "private": false,
+  "peerDependencies": {
+    "@angular/core": ">=6.0.0",
+    "@angular/common": ">=6.0.0"
+  },
+  "ngPackage": {
+    "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+    "lib": {
+      "entryFile": "src/public_api.ts"
+    },
+    "dest": "../../dist/"
+  }
+}

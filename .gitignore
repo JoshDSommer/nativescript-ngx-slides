@@ -1,19 +1,39 @@
-*.js
-*.js.map
-*.log
-demo/app/*.js
-demo/*.d.ts
-demo/platforms
-demo/node_modules
-slides/app/**/*.js
-slides/*.d.ts
-slides/platforms
-slides/node_modules
+# see http://help.github.com/ignore-files/ for more about ignoring files.
+### WEB
+# compiled output
+dist
+
+# IDE - VsCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+
+
+# system Files
+.Ds_store
+Thumbs.db
+
 node_modules
 
-// ignore dist
-dist/*
-!dist/package.json
-!dist/.npmrc
-!dist/.npmignore
-!gulp-inline-script.js
+platforms
+
+/**/*.js
+!/webpack.config.js
+/**/*.js.map
+/**/*.log
+/**/*.nsbuildinfo
+/platforms
+/node_modules
+/report
+!/**/*.worker.js
