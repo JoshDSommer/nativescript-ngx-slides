@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component,  Input, ViewChild, ElementRef, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
 import * as gestures from 'tns-core-modules/ui/gestures';
 
