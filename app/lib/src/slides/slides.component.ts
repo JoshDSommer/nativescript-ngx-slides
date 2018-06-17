@@ -113,11 +113,6 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.manualInitTriggered = true;
 	}
 
-	/**
-	 * This method cannot be called directly from a using component but has to be called within ngAfterViewChecked().
-	 *
-	 * @private
-	 */
 	private _init() {
 		if (this.slides === undefined || this.slides === null || this.slides.length == 0 || (!this.manualInitTriggered && !this.autoInit)) {
 			return;
