@@ -1,7 +1,14 @@
 # NativeScript + Angular Slides for iOS and Android
 
-[![npm](https://img.shields.io/npm/v/nativescript-ngx-slides.svg)](https://www.npmjs.com/package/nativescript-ngx-slides)
-[![npm](https://img.shields.io/npm/dt/nativescript-ngx-slides.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-ngx-slides)
+[![NPM version][npm-image]][npm-url]
+[![Downloads][downloads-image]][npm-url]
+[![Twitter Follow][twitter-image]][twitter-url]
+
+[npm-image]:http://img.shields.io/npm/v/nativescript-ngx-slides.svg
+[npm-url]:https://npmjs.org/package/nativescript-ngx-slides
+[downloads-image]:http://img.shields.io/npm/dt/nativescript-ngx-slides.svg
+[twitter-image]:https://img.shields.io/twitter/follow/_joshsommer.svg?style=social&label=Josh%20Sommer
+[twitter-url]:https://twitter.com/_joshsommer
 
 
 ### Intro slides example:
