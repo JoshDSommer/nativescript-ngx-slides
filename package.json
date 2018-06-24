@@ -10,7 +10,7 @@
     }
   },
   "scripts": {
-    "build": "ng-packagr -p lib/package.json",
+    "build": "ng-packagr -p lib/package.json && cp README.md dist && cp LICENSE dist",
     "ios": "tns run ios --syncAllFiles",
     "android": "tns run android --syncAllFiles"
   },
