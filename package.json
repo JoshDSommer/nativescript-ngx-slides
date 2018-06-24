@@ -41,6 +41,7 @@
     "nativescript-dev-typescript": "~0.7.0",
     "nativescript-dev-webpack": "~0.10.0",
     "nativescript-worker-loader": "~0.8.1",
+    "nativescript-ngx-slides": "file:./lib/",
     "ng-packagr": "^3.0.1",
     "raw-loader": "~0.5.1",
     "resolve-url-loader": "~2.2.1",
