@@ -24,6 +24,6 @@
     "lib": {
       "entryFile": "src/public_api.ts"
     },
-    "dest": "../../dist/"
+    "dest": "../dist/"
   }
 }
