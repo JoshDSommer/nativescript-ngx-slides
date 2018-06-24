@@ -132,9 +132,9 @@ If the property `pageIndicators` is `true` you won't see the page indicators any
 #### Plugin Development Work Flow:
 
 - Clone repository to your machine.
-- Run `npm run setup` to prepare the demo project
-- Build with `npm run build`
-- Run and deploy to your device or emulator with `npm run demo.android` or `npm run demo.ios`
+- Run `npm install` to prepare the project
+- Run and deploy to your device or emulator with `npm run android` or `npm run ios`
+- Build a ngPackagr version with `npm run build`
 
 #### Known issues
 
