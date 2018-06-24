@@ -49,17 +49,8 @@ enum cancellationReason {
 
 @Component({
   selector: "slides",
-  template: `
-	<AbsoluteLayout width="100%">
-		<ng-content></ng-content>
-		<StackLayout *ngIf="pageIndicators" #footer style="width:100%; height:20%;">
-			<Label *ngFor="let indicator of indicators"
-				[class.slide-indicator-active]="indicator.active == true"
-				[class.slide-indicator-inactive]="indicator.active == false	"
-			></Label>
-		</StackLayout>
-	</AbsoluteLayout>
-	`,
+  templateUrl: "./slides.component.html",
+  moduleId: module.id,
   encapsulation: ViewEncapsulation.None
 })
 export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
