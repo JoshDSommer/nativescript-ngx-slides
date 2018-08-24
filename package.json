@@ -6,7 +6,7 @@
   "nativescript": {
     "id": "org.nativescript.nativescriptpackagr",
     "tns-ios": {
-      "version": "4.0.1"
+      "version": "4.2.0"
     }
   },
   "scripts": {
@@ -25,11 +25,11 @@
     "@angular/platform-browser-dynamic": "~6.0.0",
     "@angular/router": "~6.0.0",
     "nativescript-angular": "~6.0.0",
-    "nativescript-ngx-slides": "file:./lib/",
     "nativescript-theme-core": "~1.0.4",
+    "nativescript-ngx-slides": "file:./lib/",
     "reflect-metadata": "~0.1.8",
     "rxjs": "~6.1.0",
-    "tns-core-modules": "~4.1.0",
+    "tns-core-modules": "^4.2.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
