@@ -101,6 +101,8 @@ This very much a work in progress. Please feel free to contribute.
 
 - **pageIndicators : boolean** - If true adds indicator dots to the bottom of your slides.
 
+- **swipeSpeed : number** - Determines the speed of swipe. The bigger `swipeSpeed` property is, the faster you swipe the slides. Default value is 3. Try changing it to 15 to see the result.
+
 #### Indicators
 
 If the property `pageIndicators` is `true` you won't see the page indicators anymore as of 2.0.0 right away. there are two css classes exposed that you can setup however you like for active and inactive indicators. below is an example for semi translucent dots.

@@ -62,6 +62,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input("footerMarginTop") footerMarginTop: number;
   @Input("loop") loop: boolean;
   @Input("pageIndicators") pageIndicators: boolean;
+  @Input("swipeSpeed") swipeSpeed: number;
   @Input("class") cssClass: string = "";
   @Input() zoomEnabled = false;
   @Input("autoInit") autoInit: boolean = true;
@@ -100,6 +101,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.loop = this.loop ? this.loop : false;
     this.pageIndicators = this.pageIndicators ? this.pageIndicators : false;
+    this.swipeSpeed = this.swipeSpeed ? this.swipeSpeed : 3;
     this.pageWidth = this.pageWidth
       ? this.pageWidth
       : platform.screen.mainScreen.widthDIPs;
@@ -390,7 +392,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
       // if velocityScrolling is enabled then calculate the velocitty
 
       // swiping left to right.
-      if (args.deltaX > this.pageWidth / 3) {
+      if (args.deltaX > this.pageWidth / this.swipeSpeed) {
         if (this.hasPrevious) {
           this.transitioning = true;
           this.showLeftSlide(
@@ -410,7 +412,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
       // swiping right to left
-      else if (args.deltaX < -this.pageWidth / 3) {
+      else if (args.deltaX < -this.pageWidth / this.swipeSpeed) {
         if (this.hasNext) {
           this.transitioning = true;
           this.showRightSlide(
