@@ -16,13 +16,11 @@ import {
 } from "@angular/core";
 
 import { SlideComponent } from "../slide/slide.component";
-import * as gestures from "tns-core-modules/ui/gestures";
-import * as platform from "tns-core-modules/platform";
-import * as AnimationModule from "tns-core-modules/ui/animation";
-import { AnimationCurve } from "tns-core-modules/ui/enums";
-import * as app from "tns-core-modules/application";
-import { AbsoluteLayout } from "tns-core-modules/ui/layouts/absolute-layout";
-import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
+import * as gestures from '@nativescript/core/ui/gestures';
+import { Screen } from '@nativescript/core';
+import * as AnimationModule from '@nativescript/core/ui/animation';
+import { Enums, StackLayout, AbsoluteLayout } from '@nativescript/core';
+import * as app from '@nativescript/core/application';
 
 export interface IIndicators {
   active: boolean;
@@ -104,10 +102,10 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.swipeSpeed = this.swipeSpeed ? this.swipeSpeed : 3;
     this.pageWidth = this.pageWidth
       ? this.pageWidth
-      : platform.screen.mainScreen.widthDIPs;
+      : Screen.mainScreen.widthDIPs;
     this.pageHeight = this.pageHeight
       ? this.pageHeight
-      : platform.screen.mainScreen.heightDIPs;
+      : Screen.mainScreen.heightDIPs;
     this.footerMarginTop = this.footerMarginTop
       ? this.footerMarginTop
       : this.calculateFoorterMarginTop(this.pageHeight);
@@ -167,17 +165,17 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
     // setting it in the time out addresses this.
     setTimeout(() => {
       // the values are either 'landscape' or 'portrait'
-      // platform.screen.mainScreen.heightDIPs/widthDIPs holds original screen size
+      // Screen.mainScreen.heightDIPs/widthDIPs holds original screen size
       if (args.newValue === "landscape") {
         this.pageWidth = app.android
-          ? platform.screen.mainScreen.heightDIPs
-          : platform.screen.mainScreen.widthDIPs;
+          ? Screen.mainScreen.heightDIPs
+          : Screen.mainScreen.widthDIPs;
         this.pageHeight = app.android
-          ? platform.screen.mainScreen.widthDIPs
-          : platform.screen.mainScreen.heightDIPs;
+          ? Screen.mainScreen.widthDIPs
+          : Screen.mainScreen.heightDIPs;
       } else {
-        this.pageWidth = platform.screen.mainScreen.widthDIPs;
-        this.pageHeight = platform.screen.mainScreen.heightDIPs;
+        this.pageWidth = Screen.mainScreen.widthDIPs;
+        this.pageHeight = Screen.mainScreen.heightDIPs;
       }
 
       this.footerMarginTop = this.calculateFoorterMarginTop(this.pageHeight);
@@ -299,13 +297,13 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
       target: slideMap.right.slide.layout,
       translate: { x: -this.pageWidth, y: 0 },
       duration: animationDuration,
-      curve: AnimationCurve.easeOut
+      curve: Enums.AnimationCurve.easeOut
     });
     transition.push({
       target: slideMap.slide.layout,
       translate: { x: -this.pageWidth * 2, y: 0 },
       duration: animationDuration,
-      curve: AnimationCurve.easeOut
+      curve: Enums.AnimationCurve.easeOut
     });
     let animationSet = new AnimationModule.Animation(transition, false);
 
@@ -326,13 +324,13 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
       target: slideMap.left.slide.layout,
       translate: { x: -this.pageWidth, y: 0 },
       duration: animationDuration,
-      curve: AnimationCurve.easeOut
+      curve: Enums.AnimationCurve.easeOut
     });
     transition.push({
       target: slideMap.slide.layout,
       translate: { x: 0, y: 0 },
       duration: animationDuration,
-      curve: AnimationCurve.easeOut
+      curve: Enums.AnimationCurve.easeOut
     });
     let animationSet = new AnimationModule.Animation(transition, false);
 
@@ -448,13 +446,13 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentSlide.slide.layout.animate({
           translate: { x: -this.pageWidth, y: 0 },
           duration: 200,
-          curve: AnimationCurve.easeOut
+          curve: Enums.AnimationCurve.easeOut
         });
         if (this.hasNext) {
           this.currentSlide.right.slide.layout.animate({
             translate: { x: 0, y: 0 },
             duration: 200,
-            curve: AnimationCurve.easeOut
+            curve: Enums.AnimationCurve.easeOut
           });
           if (app.ios)
             //for some reason i have to set these in ios or there is some sort of bounce back.
@@ -464,7 +462,7 @@ export class SlidesComponent implements OnInit, AfterViewInit, OnDestroy {
           this.currentSlide.left.slide.layout.animate({
             translate: { x: -this.pageWidth * 2, y: 0 },
             duration: 200,
-            curve: AnimationCurve.easeOut
+            curve: Enums.AnimationCurve.easeOut
           });
           if (app.ios)
             this.currentSlide.left.slide.layout.translateX = -this.pageWidth;

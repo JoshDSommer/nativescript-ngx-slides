@@ -3,42 +3,40 @@
   "license": "SEE LICENSE IN <your-license-filename>",
   "readme": "NativeScript Application",
   "repository": "<fill-your-repository-here>",
-  "nativescript": {
-    "id": "org.nativescript.nativescriptpackagr",
-    "tns-ios": {
-      "version": "4.2.0"
-    },
-    "tns-android": {
-      "version": "4.2.0"
-    }
-  },
   "scripts": {
-    "build": "ng-packagr -p lib/package.json && cp README.md dist && cp LICENSE dist",
+    "build": "ng-packagr -p lib/ng-package.json && cp README.md dist && cp LICENSE dist",
     "ios": "tns run ios --syncAllFiles",
     "android": "tns run android --syncAllFiles"
   },
   "dependencies": {
-    "@angular/animations": "~6.0.0",
-    "@angular/common": "~6.0.0",
-    "@angular/compiler": "~6.0.0",
-    "@angular/core": "~6.0.0",
-    "@angular/forms": "~6.0.0",
+    "@angular/animations": "~14.1.0",
+    "@angular/common": "~14.1.0",
+    "@angular/compiler": "~14.1.0",
+    "@angular/core": "~14.1.0",
+    "@angular/forms": "~14.1.0",
     "@angular/http": "~6.0.0",
-    "@angular/platform-browser": "~6.0.0",
-    "@angular/platform-browser-dynamic": "~6.0.0",
-    "@angular/router": "~6.0.0",
-    "nativescript-angular": "~6.0.0",
-    "nativescript-theme-core": "~1.0.4",
+    "@angular/platform-browser": "~14.1.0",
+    "@angular/platform-browser-dynamic": "~14.1.0",
+    "@angular/router": "~14.1.0",
+    "@nativescript/angular": "^14.0.0",
+    "@nativescript/core": "~8.3.0",
     "nativescript-ngx-slides": "file:./lib/",
+    "@nativescript/theme": "~3.0.2",
     "reflect-metadata": "~0.1.8",
-    "rxjs": "~6.1.0",
-    "tns-core-modules": "^4.2.0",
-    "zone.js": "^0.8.26"
+    "rxjs": "~7.5.0",
+    "zone.js": "~0.11.5"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "^6.0.6",
-    "nativescript-dev-typescript": "~0.7.0",
-    "ng-packagr": "^3.0.1",
-    "typescript": "~2.7.2"
-  }
+    "@angular-devkit/build-angular": "~14.1.0",
+    "@angular/cli": "~14.1.0",
+    "@angular/compiler-cli": "~14.1.0",
+    "@nativescript/android": "8.3.1",
+    "@nativescript/types": "~8.3.0",
+    "@nativescript/webpack": "~5.0.0",
+    "@ngtools/webpack": "^14.2.9",
+    "@types/webpack-env": "^1.18.0",
+    "ng-packagr": "~14.3.0",
+    "typescript": "~4.6.4"
+  },
+  "main": "./app/main.ts"
 }
