@@ -7,8 +7,8 @@ import {
   EventEmitter,
   ViewEncapsulation
 } from "@angular/core";
-import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
-import * as gestures from "tns-core-modules/ui/gestures";
+import { StackLayout } from '@nativescript/core';
+import * as gestures from '@nativescript/core/ui/gestures';
 
 @Component({
   selector: "slide",
